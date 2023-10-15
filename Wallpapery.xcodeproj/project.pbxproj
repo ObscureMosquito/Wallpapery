@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		348927282ADC5098004AEDBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 348927272ADC5098004AEDBB /* Cocoa.framework */; };
+		348927322ADC5098004AEDBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 348927302ADC5098004AEDBB /* InfoPlist.strings */; };
+		348927342ADC5098004AEDBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 348927332ADC5098004AEDBB /* main.m */; };
+		348927382ADC5098004AEDBB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 348927362ADC5098004AEDBB /* Credits.rtf */; };
+		3489273B2ADC5098004AEDBB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3489273A2ADC5098004AEDBB /* AppDelegate.m */; };
+		3489273E2ADC5098004AEDBB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3489273C2ADC5098004AEDBB /* MainMenu.xib */; };
+		348927402ADC5098004AEDBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3489273F2ADC5098004AEDBB /* Images.xcassets */; };
+		348927472ADC5098004AEDBB /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 348927462ADC5098004AEDBB /* XCTest.framework */; };
+		348927482ADC5098004AEDBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 348927272ADC5098004AEDBB /* Cocoa.framework */; };
+		348927502ADC5098004AEDBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3489274E2ADC5098004AEDBB /* InfoPlist.strings */; };
+		348927522ADC5098004AEDBB /* WallpaperyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 348927512ADC5098004AEDBB /* WallpaperyTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		348927492ADC5098004AEDBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3489271C2ADC5098004AEDBB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 348927232ADC5098004AEDBB;
+			remoteInfo = Wallpapery;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		348927242ADC5098004AEDBB /* Wallpapery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallpapery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		348927272ADC5098004AEDBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		3489272A2ADC5098004AEDBB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		3489272B2ADC5098004AEDBB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3489272C2ADC5098004AEDBB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3489272F2ADC5098004AEDBB /* Wallpapery-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Wallpapery-Info.plist"; sourceTree = "<group>"; };
+		348927312ADC5098004AEDBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		348927332ADC5098004AEDBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		348927352ADC5098004AEDBB /* Wallpapery-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wallpapery-Prefix.pch"; sourceTree = "<group>"; };
+		348927372ADC5098004AEDBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		348927392ADC5098004AEDBB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3489273A2ADC5098004AEDBB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3489273D2ADC5098004AEDBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3489273F2ADC5098004AEDBB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		348927452ADC5098004AEDBB /* WallpaperyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WallpaperyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		348927462ADC5098004AEDBB /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3489274D2ADC5098004AEDBB /* WallpaperyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WallpaperyTests-Info.plist"; sourceTree = "<group>"; };
+		3489274F2ADC5098004AEDBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		348927512ADC5098004AEDBB /* WallpaperyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WallpaperyTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		348927212ADC5098004AEDBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				348927282ADC5098004AEDBB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		348927422ADC5098004AEDBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				348927482ADC5098004AEDBB /* Cocoa.framework in Frameworks */,
+				348927472ADC5098004AEDBB /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3489271B2ADC5098004AEDBB = {
+			isa = PBXGroup;
+			children = (
+				3489272D2ADC5098004AEDBB /* Wallpapery */,
+				3489274B2ADC5098004AEDBB /* WallpaperyTests */,
+				348927262ADC5098004AEDBB /* Frameworks */,
+				348927252ADC5098004AEDBB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		348927252ADC5098004AEDBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				348927242ADC5098004AEDBB /* Wallpapery.app */,
+				348927452ADC5098004AEDBB /* WallpaperyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		348927262ADC5098004AEDBB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				348927272ADC5098004AEDBB /* Cocoa.framework */,
+				348927462ADC5098004AEDBB /* XCTest.framework */,
+				348927292ADC5098004AEDBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		348927292ADC5098004AEDBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3489272A2ADC5098004AEDBB /* AppKit.framework */,
+				3489272B2ADC5098004AEDBB /* CoreData.framework */,
+				3489272C2ADC5098004AEDBB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		3489272D2ADC5098004AEDBB /* Wallpapery */ = {
+			isa = PBXGroup;
+			children = (
+				348927392ADC5098004AEDBB /* AppDelegate.h */,
+				3489273A2ADC5098004AEDBB /* AppDelegate.m */,
+				3489273C2ADC5098004AEDBB /* MainMenu.xib */,
+				3489273F2ADC5098004AEDBB /* Images.xcassets */,
+				3489272E2ADC5098004AEDBB /* Supporting Files */,
+			);
+			path = Wallpapery;
+			sourceTree = "<group>";
+		};
+		3489272E2ADC5098004AEDBB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3489272F2ADC5098004AEDBB /* Wallpapery-Info.plist */,
+				348927302ADC5098004AEDBB /* InfoPlist.strings */,
+				348927332ADC5098004AEDBB /* main.m */,
+				348927352ADC5098004AEDBB /* Wallpapery-Prefix.pch */,
+				348927362ADC5098004AEDBB /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3489274B2ADC5098004AEDBB /* WallpaperyTests */ = {
+			isa = PBXGroup;
+			children = (
+				348927512ADC5098004AEDBB /* WallpaperyTests.m */,
+				3489274C2ADC5098004AEDBB /* Supporting Files */,
+			);
+			path = WallpaperyTests;
+			sourceTree = "<group>";
+		};
+		3489274C2ADC5098004AEDBB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3489274D2ADC5098004AEDBB /* WallpaperyTests-Info.plist */,
+				3489274E2ADC5098004AEDBB /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		348927232ADC5098004AEDBB /* Wallpapery */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 348927552ADC5098004AEDBB /* Build configuration list for PBXNativeTarget "Wallpapery" */;
+			buildPhases = (
+				348927202ADC5098004AEDBB /* Sources */,
+				348927212ADC5098004AEDBB /* Frameworks */,
+				348927222ADC5098004AEDBB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Wallpapery;
+			productName = Wallpapery;
+			productReference = 348927242ADC5098004AEDBB /* Wallpapery.app */;
+			productType = "com.apple.product-type.application";
+		};
+		348927442ADC5098004AEDBB /* WallpaperyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 348927582ADC5098004AEDBB /* Build configuration list for PBXNativeTarget "WallpaperyTests" */;
+			buildPhases = (
+				348927412ADC5098004AEDBB /* Sources */,
+				348927422ADC5098004AEDBB /* Frameworks */,
+				348927432ADC5098004AEDBB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3489274A2ADC5098004AEDBB /* PBXTargetDependency */,
+			);
+			name = WallpaperyTests;
+			productName = WallpaperyTests;
+			productReference = 348927452ADC5098004AEDBB /* WallpaperyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3489271C2ADC5098004AEDBB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Skyglow;
+				TargetAttributes = {
+					348927442ADC5098004AEDBB = {
+						TestTargetID = 348927232ADC5098004AEDBB;
+					};
+				};
+			};
+			buildConfigurationList = 3489271F2ADC5098004AEDBB /* Build configuration list for PBXProject "Wallpapery" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3489271B2ADC5098004AEDBB;
+			productRefGroup = 348927252ADC5098004AEDBB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				348927232ADC5098004AEDBB /* Wallpapery */,
+				348927442ADC5098004AEDBB /* WallpaperyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		348927222ADC5098004AEDBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				348927322ADC5098004AEDBB /* InfoPlist.strings in Resources */,
+				348927402ADC5098004AEDBB /* Images.xcassets in Resources */,
+				348927382ADC5098004AEDBB /* Credits.rtf in Resources */,
+				3489273E2ADC5098004AEDBB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		348927432ADC5098004AEDBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				348927502ADC5098004AEDBB /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		348927202ADC5098004AEDBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3489273B2ADC5098004AEDBB /* AppDelegate.m in Sources */,
+				348927342ADC5098004AEDBB /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		348927412ADC5098004AEDBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				348927522ADC5098004AEDBB /* WallpaperyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3489274A2ADC5098004AEDBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 348927232ADC5098004AEDBB /* Wallpapery */;
+			targetProxy = 348927492ADC5098004AEDBB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		348927302ADC5098004AEDBB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				348927312ADC5098004AEDBB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		348927362ADC5098004AEDBB /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				348927372ADC5098004AEDBB /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		3489273C2ADC5098004AEDBB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3489273D2ADC5098004AEDBB /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		3489274E2ADC5098004AEDBB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3489274F2ADC5098004AEDBB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		348927532ADC5098004AEDBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		348927542ADC5098004AEDBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		348927562ADC5098004AEDBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Wallpapery/Wallpapery-Prefix.pch";
+				INFOPLIST_FILE = "Wallpapery/Wallpapery-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		348927572ADC5098004AEDBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Wallpapery/Wallpapery-Prefix.pch";
+				INFOPLIST_FILE = "Wallpapery/Wallpapery-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		348927592ADC5098004AEDBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Wallpapery.app/Contents/MacOS/Wallpapery";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Wallpapery/Wallpapery-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "WallpaperyTests/WallpaperyTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		3489275A2ADC5098004AEDBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Wallpapery.app/Contents/MacOS/Wallpapery";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Wallpapery/Wallpapery-Prefix.pch";
+				INFOPLIST_FILE = "WallpaperyTests/WallpaperyTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3489271F2ADC5098004AEDBB /* Build configuration list for PBXProject "Wallpapery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				348927532ADC5098004AEDBB /* Debug */,
+				348927542ADC5098004AEDBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		348927552ADC5098004AEDBB /* Build configuration list for PBXNativeTarget "Wallpapery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				348927562ADC5098004AEDBB /* Debug */,
+				348927572ADC5098004AEDBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		348927582ADC5098004AEDBB /* Build configuration list for PBXNativeTarget "WallpaperyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				348927592ADC5098004AEDBB /* Debug */,
+				3489275A2ADC5098004AEDBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3489271C2ADC5098004AEDBB /* Project object */;
+}
