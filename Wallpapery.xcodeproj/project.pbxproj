@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		342280AB2ADE0B9500706591 /* settings_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 342280A92ADE0B9500706591 /* settings_button.png */; };
 		342B5E7C2AE95CED003459C8 /* refresh_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 342B5E7B2AE95CED003459C8 /* refresh_button.png */; };
 		342B5E7E2AE9718A003459C8 /* frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 342B5E7D2AE9718A003459C8 /* frame.png */; };
+		342B5E802AE9827B003459C8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 342B5E7F2AE9827B003459C8 /* QuartzCore.framework */; platformFilter = maccatalyst; };
 		343BEB172ADE1E5200C42B86 /* brotli in Resources */ = {isa = PBXBuildFile; fileRef = 343BEB162ADE1E5200C42B86 /* brotli */; };
 		343BEB192ADE22B500C42B86 /* status_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 343BEB182ADE22B500C42B86 /* status_icon.png */; };
 		34474F122ADDD89300C7486E /* sign.png in Resources */ = {isa = PBXBuildFile; fileRef = 34474F112ADDD89300C7486E /* sign.png */; };
@@ -49,6 +50,7 @@
 		342280A92ADE0B9500706591 /* settings_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings_button.png; path = Images.xcassets/settings_button.png; sourceTree = "<group>"; };
 		342B5E7B2AE95CED003459C8 /* refresh_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = refresh_button.png; path = Images.xcassets/refresh_button.png; sourceTree = "<group>"; };
 		342B5E7D2AE9718A003459C8 /* frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frame.png; path = Images.xcassets/frame.png; sourceTree = "<group>"; };
+		342B5E7F2AE9827B003459C8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		343BEB162ADE1E5200C42B86 /* brotli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = brotli; sourceTree = "<group>"; };
 		343BEB182ADE22B500C42B86 /* status_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = status_icon.png; path = Images.xcassets/status_icon.png; sourceTree = "<group>"; };
 		34474F112ADDD89300C7486E /* sign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sign.png; path = Images.xcassets/sign.png; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			files = (
 				34A5FC652ADC815700D89992 /* Foundation.framework in Frameworks */,
 				348927282ADC5098004AEDBB /* Cocoa.framework in Frameworks */,
+				342B5E802AE9827B003459C8 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +118,7 @@
 		348927262ADC5098004AEDBB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				342B5E7F2AE9827B003459C8 /* QuartzCore.framework */,
 				348927272ADC5098004AEDBB /* Cocoa.framework */,
 				348927462ADC5098004AEDBB /* XCTest.framework */,
 				348927292ADC5098004AEDBB /* Other Frameworks */,
@@ -408,6 +412,7 @@
 				GCC_PREFIX_HEADER = "Wallpapery/Wallpapery-Prefix.pch";
 				INFOPLIST_FILE = "Wallpapery/Wallpapery-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -423,6 +428,7 @@
 				GCC_PREFIX_HEADER = "Wallpapery/Wallpapery-Prefix.pch";
 				INFOPLIST_FILE = "Wallpapery/Wallpapery-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -70,11 +70,11 @@
     // Add the wallpaper imageView to the customView first
     [customView addSubview:self.imageViewPlaceholder];
     
-    NSImage *originalFrameImage = [NSImage imageNamed:@"frame2.png"];
-        
+    NSImage *originalFrameImage = [NSImage imageNamed:@"frame.png"];
+
     // Create a new image with the desired size (for example, 300 width and 475 height)
     NSImage *resizedFrameImage = [[NSImage alloc] initWithSize:NSMakeSize(275, 165)]; // Adjust width as needed
-        
+
     [resizedFrameImage lockFocus];
     // This will stretch the originalFrameImage to fill the entire size of resizedFrameImage
     [originalFrameImage drawInRect:NSMakeRect(0, 0, resizedFrameImage.size.width, resizedFrameImage.size.height)
@@ -82,12 +82,20 @@
                          operation:NSCompositeSourceOver
                           fraction:1.0];
     [resizedFrameImage unlockFocus];
-        
+
     // Create the imageView for the frame using the resized image
     NSImageView *frameImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(10, 135, 275, 170)];
     frameImageView.image = resizedFrameImage;
     frameImageView.wantsLayer = YES;
-        
+
+    // Create and set the shadow for the imageView
+    NSShadow *frameShadow = [[NSShadow alloc] init];
+    frameShadow.shadowColor = [NSColor blackColor];  // You can change this to any color you want
+    frameShadow.shadowOffset = NSMakeSize(0, -3.0);  // This will determine the direction and distance of the shadow
+    frameShadow.shadowBlurRadius = 5.0;  // This will determine how soft the shadow edges will be
+
+    frameImageView.shadow = frameShadow;
+
     // Add the frame imageView to the customView
     [customView addSubview:frameImageView];
 
@@ -171,8 +179,19 @@
     NSMenuItem *viewMenuItem = [[NSMenuItem alloc] init];
     [viewMenuItem setView:customView];
     [self.menu addItem:viewMenuItem];
-    
-    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-30, -12, 240, 155)];
+
+    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-35, -12, 240, 155)];
+
+    // Create and configure the shadow
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowColor:[NSColor blackColor]];  // Shadow color
+    [shadow setShadowOffset:NSMakeSize(0, -0.1)];  // 0 for x-axis and -10 for y-axis to make it appear at the bottom
+    [shadow setShadowBlurRadius:5.0];             // Adjust as needed
+
+    // Apply the shadow to the image view
+    [plaqueImageView setWantsLayer:YES];          // Necessary for shadow
+    [plaqueImageView setShadow:shadow];
+
     [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
     plaqueImageView.imageScaling = NSImageScaleAxesIndependently; // This will stretch the image
     [customView addSubview:plaqueImageView];
@@ -183,7 +202,7 @@
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 56, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 55, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -195,7 +214,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 35, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 35, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
