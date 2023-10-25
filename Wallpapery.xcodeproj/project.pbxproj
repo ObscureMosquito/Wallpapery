@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,6 @@
 		342280AB2ADE0B9500706591 /* settings_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 342280A92ADE0B9500706591 /* settings_button.png */; };
 		342B5E7C2AE95CED003459C8 /* refresh_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 342B5E7B2AE95CED003459C8 /* refresh_button.png */; };
 		342B5E7E2AE9718A003459C8 /* frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 342B5E7D2AE9718A003459C8 /* frame.png */; };
-		342B5E802AE9827B003459C8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 342B5E7F2AE9827B003459C8 /* QuartzCore.framework */; platformFilter = maccatalyst; };
 		343BEB172ADE1E5200C42B86 /* brotli in Resources */ = {isa = PBXBuildFile; fileRef = 343BEB162ADE1E5200C42B86 /* brotli */; };
 		343BEB192ADE22B500C42B86 /* status_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 343BEB182ADE22B500C42B86 /* status_icon.png */; };
 		34474F122ADDD89300C7486E /* sign.png in Resources */ = {isa = PBXBuildFile; fileRef = 34474F112ADDD89300C7486E /* sign.png */; };
@@ -81,7 +80,6 @@
 			files = (
 				34A5FC652ADC815700D89992 /* Foundation.framework in Frameworks */,
 				348927282ADC5098004AEDBB /* Cocoa.framework in Frameworks */,
-				342B5E802AE9827B003459C8 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +223,7 @@
 				};
 			};
 			buildConfigurationList = 3489271F2ADC5098004AEDBB /* Build configuration list for PBXProject "Wallpapery" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

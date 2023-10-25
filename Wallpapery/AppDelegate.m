@@ -337,7 +337,7 @@
 
 
 - (void)setWallpaperButtonClicked:(id)sender {
-    NSLog(@"Set Wallpaper button clicked.");  // Debug message
+    NSLog(@"Set Wallpaper button clicked.");
     [self setNewWallpaper];
 }
 
