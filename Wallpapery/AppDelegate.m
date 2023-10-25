@@ -8,6 +8,10 @@
 
 #import "AppDelegate.h"
 
+@interface NSMenu (secret)
+- (void) _setHasPadding: (BOOL) pad onEdge: (int) whatEdge;
+@end
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) NSTextField *locationTextField;
@@ -15,6 +19,7 @@
 @property (strong) NSImageView *imageViewPlaceholder;
 
 - (void)fetchAndDisplayImageFromURL:(NSURL *)url;
+
 
 @end
 
@@ -52,10 +57,17 @@
     
     // Create a custom NSView for our menu
     NSView *customView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 295, 310)];
+    customView.layer.backgroundColor = CGColorGetConstantColor(kCGColorClear);
     customView.wantsLayer = YES;
     NSImage *backgroundImage = [NSImage imageNamed:@"backround_2.jpg"];
     customView.layer.contents = backgroundImage;
     customView.layer.contentsGravity = kCAGravityResizeAspectFill; // This line ensures the image fills the entire view.
+    
+    // Private method that removes top and bottom padding
+    if ([self.menu respondsToSelector: @selector(_setHasPadding:onEdge:)]) {
+        [self.menu _setHasPadding: NO onEdge: 1];
+        [self.menu _setHasPadding: NO onEdge: 3];
+    }
 
     
     // Add large image view placeholder for current wallpaper
@@ -107,7 +119,7 @@
     
     // Load the image
     NSImage *buttonImage = [NSImage imageNamed:@"set_button.png"];
-    [buttonImage setSize:NSMakeSize(82, 82)];
+    [buttonImage setSize:NSMakeSize(79, 79)];
     
     [setWallpaperButton setImage:buttonImage];
     [setWallpaperButton setImagePosition:NSImageOnly];
@@ -122,11 +134,11 @@
 
     
     // Create "Next Wallpaper" button
-    NSButton *nextWallpaperButton = [[NSButton alloc] initWithFrame:NSMakeRect(218, 2, 60, 60)];
+    NSButton *nextWallpaperButton = [[NSButton alloc] initWithFrame:NSMakeRect(218, 3, 60, 60)];
     
     // Load the image
     NSImage *nextButtonImage = [NSImage imageNamed:@"next_button.png"];
-    [nextButtonImage setSize:NSMakeSize(82, 82)]; // Set the image size to 40x40
+    [nextButtonImage setSize:NSMakeSize(79, 79)]; // Set the image size to 40x40
     
     [nextWallpaperButton setImage:nextButtonImage];
     [nextWallpaperButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
@@ -180,7 +192,7 @@
     [viewMenuItem setView:customView];
     [self.menu addItem:viewMenuItem];
 
-    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-35, -12, 240, 155)];
+    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-35, -18, 240, 155)];
 
 
     [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
@@ -193,7 +205,7 @@
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 55, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 49, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -205,7 +217,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 35, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 29, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
