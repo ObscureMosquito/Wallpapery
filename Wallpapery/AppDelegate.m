@@ -59,7 +59,7 @@
     NSView *customView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 295, 310)];
     customView.layer.backgroundColor = CGColorGetConstantColor(kCGColorClear);
     customView.wantsLayer = YES;
-    NSImage *backgroundImage = [NSImage imageNamed:@"backround_2.jpg"];
+    NSImage *backgroundImage = [NSImage imageNamed:@"backround2.png"];
     customView.layer.contents = backgroundImage;
     customView.layer.contentsGravity = kCAGravityResizeAspectFill; // This line ensures the image fills the entire view.
     
@@ -187,25 +187,35 @@
     
     [customView addSubview:refreshButton];
     
-    
     NSMenuItem *viewMenuItem = [[NSMenuItem alloc] init];
     [viewMenuItem setView:customView];
     [self.menu addItem:viewMenuItem];
-
-    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-35, -18, 240, 155)];
-
-
+    
+    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-38, -17, 240, 155)];
+    
+    // Create and configure the shadow
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowColor:[NSColor blackColor]];  // Shadow color
+    [shadow setShadowOffset:NSMakeSize(0, -10)];  // 0 for x-axis and -10 for y-axis to make it appear at the bottom
+    [shadow setShadowBlurRadius:5.0];             // Adjust as needed
+    
+    // Apply the shadow to the image view
+    [plaqueImageView setWantsLayer:YES];          // Necessary for shadow
+    [plaqueImageView setShadow:shadow];
+    
     [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
     plaqueImageView.imageScaling = NSImageScaleAxesIndependently; // This will stretch the image
     [customView addSubview:plaqueImageView];
 
 
+
     //Font
-    NSFont *customFont = [NSFont fontWithName:@"Times New Roman" size:14];
+    NSFont *customFont = [NSFont fontWithName:@"American Typewriter" size:14];
+
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 49, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 56, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -217,7 +227,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 29, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 36, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
@@ -541,6 +551,9 @@
                 if (imageData) {
                     NSString *location = imageData[@"location"];
                     NSString *name = imageData[@"name"];
+                    self.locationTextField.textColor = [NSColor blackColor]; // For example, set to red color
+                    self.nameTextField.textColor = [NSColor blackColor];
+
                     
                     // Check if location is <null> or is NSNull and replace with Unknown Location
                     if ([location isKindOfClass:[NSNull class]] || [location isEqualToString:@"<null>"]) {
@@ -554,6 +567,9 @@
                     
                     self.locationTextField.stringValue = location ?: @"Unknown Location";
                     self.nameTextField.stringValue = name ?: @"Unknown Name";
+                    self.locationTextField.textColor = [NSColor blackColor]; // For example, set to red color
+                    self.nameTextField.textColor = [NSColor blackColor];
+
                     
                     NSLog(@"After setting - Location: %@, Name: %@", self.locationTextField.stringValue, self.nameTextField.stringValue);
                 } else {
