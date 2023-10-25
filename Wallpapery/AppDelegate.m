@@ -91,7 +91,7 @@
     // Create and set the shadow for the imageView
     NSShadow *frameShadow = [[NSShadow alloc] init];
     frameShadow.shadowColor = [NSColor blackColor];  // You can change this to any color you want
-    frameShadow.shadowOffset = NSMakeSize(0, -3.0);  // This will determine the direction and distance of the shadow
+    frameShadow.shadowOffset = NSMakeSize(0, -4.0);  // This will determine the direction and distance of the shadow
     frameShadow.shadowBlurRadius = 5.0;  // This will determine how soft the shadow edges will be
 
     frameImageView.shadow = frameShadow;
@@ -411,8 +411,12 @@
 }
 
 - (BOOL)macOSSupportsAutomaticBrotliDecompression {
-
+    NSOperatingSystemVersion currentVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
     
+    // Assuming that macOS version 10.14 and above support the feature.
+    if (currentVersion.majorVersion > 10 || (currentVersion.majorVersion == 10 && currentVersion.minorVersion >= 14)) {
+        return YES;
+    }
     return NO;
 }
 
