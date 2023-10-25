@@ -21,13 +21,29 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Setup the status item
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:25];
+    
+    // Get the original image
     NSImage *statusItemImage = [NSImage imageNamed:@"status_icon.png"];
-    self.statusItem.image = statusItemImage;
-    self.statusItem.target = self;
-    self.statusItem.action = @selector(statusItemClicked);
-    self.statusItem.highlightMode = YES;
+    
+    // Resize the image to fit the menu bar
+    NSSize newSize = NSMakeSize(37, 36); // menu bar items are typically around 20x20
+    NSImage *resizedImage = [[NSImage alloc] initWithSize:newSize];
+    
+    [resizedImage lockFocus];
+    [statusItemImage drawInRect:NSMakeRect(0, 0, newSize.width, newSize.height)
+                       fromRect:NSZeroRect
+                      operation:NSCompositeCopy
+                       fraction:1.0];
+    [resizedImage unlockFocus];
+    
+    // Set the resized image to the status item
+    self.statusItem.image = resizedImage;
+    
+    [self.statusItem setTarget:self];
+    [self.statusItem setAction:@selector(statusItemClicked)];
+    [self.statusItem setHighlightMode:YES];
     
     [self fetchWallpaperData];
     
@@ -470,11 +486,16 @@
                     NSString *location = imageData[@"location"];
                     NSString *name = imageData[@"name"];
                     
+                    // Check if location is <null> or is NSNull and replace with Unknown Location
+                    if ([location isKindOfClass:[NSNull class]] || [location isEqualToString:@"<null>"]) {
+                        location = @"Unknown Location";
+                    }
+                    
                     NSLog(@"Before setting - Location: %@, Name: %@", location, name);
                     
                     [self.locationTextField setNeedsDisplay:YES];
                     [self.nameTextField setNeedsDisplay:YES];
-
+                    
                     self.locationTextField.stringValue = location ?: @"Unknown Location";
                     self.nameTextField.stringValue = name ?: @"Unknown Name";
                     
