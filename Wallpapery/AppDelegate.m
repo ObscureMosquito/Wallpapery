@@ -59,7 +59,7 @@
 
     
     // Add large image view placeholder for current wallpaper
-    self.imageViewPlaceholder = [[NSImageView alloc] initWithFrame:NSMakeRect(49, 152, 197, 118)];
+    self.imageViewPlaceholder = [[NSImageView alloc] initWithFrame:NSMakeRect(49, 159, 197, 124)];
     self.imageViewPlaceholder.wantsLayer = YES;
     self.imageViewPlaceholder.imageScaling = NSImageScaleProportionallyUpOrDown;
     self.imageViewPlaceholder.imageScaling = NSImageScaleAxesIndependently;
@@ -70,35 +70,36 @@
     // Add the wallpaper imageView to the customView first
     [customView addSubview:self.imageViewPlaceholder];
     
-    NSImage *originalFrameImage = [NSImage imageNamed:@"frame4.png"];
-    
-    // Create a new image with the desired height (let's say 300 in this example)
-    NSImage *resizedFrameImage = [[NSImage alloc] initWithSize:NSMakeSize(originalFrameImage.size.width, 375)];
-    
+    NSImage *originalFrameImage = [NSImage imageNamed:@"frame2.png"];
+        
+    // Create a new image with the desired size (for example, 300 width and 475 height)
+    NSImage *resizedFrameImage = [[NSImage alloc] initWithSize:NSMakeSize(275, 165)]; // Adjust width as needed
+        
     [resizedFrameImage lockFocus];
+    // This will stretch the originalFrameImage to fill the entire size of resizedFrameImage
     [originalFrameImage drawInRect:NSMakeRect(0, 0, resizedFrameImage.size.width, resizedFrameImage.size.height)
                           fromRect:NSZeroRect
                          operation:NSCompositeSourceOver
                           fraction:1.0];
     [resizedFrameImage unlockFocus];
-    
+        
     // Create the imageView for the frame using the resized image
-    NSImageView *frameImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-8, -40, 310, 500)];
+    NSImageView *frameImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(10, 135, 275, 170)];
     frameImageView.image = resizedFrameImage;
     frameImageView.wantsLayer = YES;
-    
-    // Add the frame imageView to the customView on top of the wallpaper imageView
+        
+    // Add the frame imageView to the customView
     [customView addSubview:frameImageView];
 
     // Add "Set as Wallpaper" button below the label
-    NSButton *setWallpaperButton = [[NSButton alloc] initWithFrame:NSMakeRect(217, 58, 60, 60)]; // Adjust the frame to 40x40
+    NSButton *setWallpaperButton = [[NSButton alloc] initWithFrame:NSMakeRect(217, 68, 60, 60)]; // Adjust the frame to 40x40
     
     // Ensure the button doesn't have a title overlaying the image
     [setWallpaperButton setTitle:@""];
     
     // Load the image
     NSImage *buttonImage = [NSImage imageNamed:@"set_button.png"];
-    [buttonImage setSize:NSMakeSize(72, 72)];
+    [buttonImage setSize:NSMakeSize(82, 82)];
     
     [setWallpaperButton setImage:buttonImage];
     [setWallpaperButton setImagePosition:NSImageOnly];
@@ -117,7 +118,7 @@
     
     // Load the image
     NSImage *nextButtonImage = [NSImage imageNamed:@"next_button.png"];
-    [nextButtonImage setSize:NSMakeSize(72, 72)]; // Set the image size to 40x40
+    [nextButtonImage setSize:NSMakeSize(82, 82)]; // Set the image size to 40x40
     
     [nextWallpaperButton setImage:nextButtonImage];
     [nextWallpaperButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
@@ -132,11 +133,11 @@
     [customView addSubview:nextWallpaperButton];
     
     // Create "Next Wallpaper" button
-    NSButton *quitButton = [[NSButton alloc] initWithFrame:NSMakeRect(176, 40, 40, 40)];
+    NSButton *quitButton = [[NSButton alloc] initWithFrame:NSMakeRect(166, 40, 48, 48)];
     
     // Load the image
     NSImage *quitButtonImage = [NSImage imageNamed:@"quit_button.png"];
-    [quitButtonImage setSize:NSMakeSize(40, 40)]; // Set the image size to 40x40
+    [quitButtonImage setSize:NSMakeSize(49, 49)]; // Set the image size to 40x40
     
     [quitButton setImage:quitButtonImage];
     [quitButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
@@ -149,11 +150,11 @@
     
     [customView addSubview:quitButton];
     
-    NSButton *refreshButton = [[NSButton alloc] initWithFrame:NSMakeRect(175, 74, 42, 42)];
+    NSButton *refreshButton = [[NSButton alloc] initWithFrame:NSMakeRect(165, 85, 52, 52)];
     
     // Load the image
     NSImage *refreshButtonImage = [NSImage imageNamed:@"refresh_button.png"];
-    [refreshButtonImage setSize:NSMakeSize(42, 42)]; // Set the image size to 40x40
+    [refreshButtonImage setSize:NSMakeSize(54, 54)]; // Set the image size to 40x40
     
     [refreshButton setImage:refreshButtonImage];
     [refreshButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
@@ -171,7 +172,7 @@
     [viewMenuItem setView:customView];
     [self.menu addItem:viewMenuItem];
     
-    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-30, -17, 240, 145)];
+    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-30, -12, 240, 155)];
     [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
     plaqueImageView.imageScaling = NSImageScaleAxesIndependently; // This will stretch the image
     [customView addSubview:plaqueImageView];
@@ -182,7 +183,7 @@
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 45, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 56, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -194,7 +195,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 29, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 35, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
