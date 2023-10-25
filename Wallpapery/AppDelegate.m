@@ -411,12 +411,19 @@
 }
 
 - (BOOL)macOSSupportsAutomaticBrotliDecompression {
-    NSOperatingSystemVersion currentVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
+    NSString *versionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
+    NSArray *versionComponents = [versionString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"."]];
     
-    // Assuming that macOS version 10.14 and above support the feature.
-    if (currentVersion.majorVersion > 10 || (currentVersion.majorVersion == 10 && currentVersion.minorVersion >= 14)) {
-        return YES;
+    if (versionComponents.count >= 2) {
+        NSInteger majorVersion = [versionComponents[0] integerValue];
+        NSInteger minorVersion = [versionComponents[1] integerValue];
+        
+        // Assuming that macOS version 10.14 and above support the feature.
+        if (majorVersion > 10 || (majorVersion == 10 && minorVersion >= 14)) {
+            return YES;
+        }
     }
+    
     return NO;
 }
 
