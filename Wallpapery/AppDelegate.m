@@ -182,15 +182,6 @@
 
     NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-35, -12, 240, 155)];
 
-    // Create and configure the shadow
-    NSShadow *shadow = [[NSShadow alloc] init];
-    [shadow setShadowColor:[NSColor blackColor]];  // Shadow color
-    [shadow setShadowOffset:NSMakeSize(0, -0.1)];  // 0 for x-axis and -10 for y-axis to make it appear at the bottom
-    [shadow setShadowBlurRadius:5.0];             // Adjust as needed
-
-    // Apply the shadow to the image view
-    [plaqueImageView setWantsLayer:YES];          // Necessary for shadow
-    [plaqueImageView setShadow:shadow];
 
     [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
     plaqueImageView.imageScaling = NSImageScaleAxesIndependently; // This will stretch the image
@@ -420,12 +411,8 @@
 }
 
 - (BOOL)macOSSupportsAutomaticBrotliDecompression {
-    NSOperatingSystemVersion currentVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
+
     
-    // Assuming that macOS version 10.14 and above support the feature.
-    if (currentVersion.majorVersion > 10 || (currentVersion.majorVersion == 10 && currentVersion.minorVersion >= 14)) {
-        return YES;
-    }
     return NO;
 }
 
