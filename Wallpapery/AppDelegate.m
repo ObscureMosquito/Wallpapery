@@ -149,21 +149,40 @@
     
     [customView addSubview:quitButton];
     
+    NSButton *refreshButton = [[NSButton alloc] initWithFrame:NSMakeRect(175, 74, 42, 42)];
+    
+    // Load the image
+    NSImage *refreshButtonImage = [NSImage imageNamed:@"refresh_button.png"];
+    [refreshButtonImage setSize:NSMakeSize(42, 42)]; // Set the image size to 40x40
+    
+    [refreshButton setImage:refreshButtonImage];
+    [refreshButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
+    
+    [refreshButton setBordered:NO]; // Remove the border to make it look more like an image button
+    [refreshButton setButtonType:NSMomentaryChangeButton]; // Momentary change button type
+    
+    [refreshButton setTarget:self];
+    [refreshButton setAction:@selector(refreshWallpapers:)];
+    
+    [customView addSubview:refreshButton];
+    
     
     NSMenuItem *viewMenuItem = [[NSMenuItem alloc] init];
     [viewMenuItem setView:customView];
     [self.menu addItem:viewMenuItem];
     
-    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-50, 16, 290, 90)]; // Adjust the frame as needed
-    [plaqueImageView setImage:[NSImage imageNamed:@"plaque2.png"]];
+    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-30, -17, 240, 145)];
+    [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
+    plaqueImageView.imageScaling = NSImageScaleAxesIndependently; // This will stretch the image
     [customView addSubview:plaqueImageView];
-    
+
+
     //Font
     NSFont *customFont = [NSFont fontWithName:@"Times New Roman" size:14];
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(32, 70, 125, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 45, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -175,7 +194,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(32, 50, 125, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(38, 29, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
@@ -263,6 +282,20 @@
         return [NSURL URLWithString:rawURLString];
     }
     return nil;  // No current data available
+}
+
+-(void)refreshWallpapers:(id)sender {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *wallpaperyDirectory = [[paths firstObject] stringByAppendingPathComponent:@"Wallpapery"];
+    NSString *filePath = [wallpaperyDirectory stringByAppendingPathComponent:@"WallpaperyData.json"];
+    NSLog(@"Refresh Initiated");
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:nil];
+        [self fetchWallpaperData];
+    }
 }
 
 
@@ -367,17 +400,10 @@
 }
 
 - (BOOL)macOSSupportsAutomaticBrotliDecompression {
-    NSString *currentVersion = [[NSProcessInfo processInfo] operatingSystemVersionString];
-    NSArray *versionComponents = [currentVersion componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" ."]];
+    NSOperatingSystemVersion currentVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
     
-    if (versionComponents.count < 2) {
-        return NO; // Safety check
-    }
-    
-    NSInteger majorVersion = [versionComponents[0] integerValue];
-    NSInteger minorVersion = [versionComponents[1] integerValue];
-    
-    if (majorVersion > 10 || (majorVersion == 10 && minorVersion >= 14)) {
+    // Assuming that macOS version 10.14 and above support the feature.
+    if (currentVersion.majorVersion > 10 || (currentVersion.majorVersion == 10 && currentVersion.minorVersion >= 14)) {
         return YES;
     }
     return NO;
