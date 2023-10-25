@@ -192,7 +192,7 @@
     [viewMenuItem setView:customView];
     [self.menu addItem:viewMenuItem];
 
-    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-35, -18, 240, 155)];
+    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-38, -18, 240, 155)];
 
 
     [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
@@ -200,12 +200,12 @@
     [customView addSubview:plaqueImageView];
 
 
-    //Font
-    NSFont *customFont = [NSFont fontWithName:@"Times New Roman" size:14];
+    NSFont *customFont = [NSFont fontWithName:@"American Typewriter" size:14];
+    
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 49, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 56, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -217,7 +217,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(34, 29, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 36, 110, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
@@ -226,8 +226,8 @@
     [self.nameTextField setEditable:NO];
     [self.nameTextField setSelectable:NO];
     [customView addSubview:self.nameTextField];
-
-
+    
+    
 }
 
 - (void)statusItemClicked {
@@ -399,7 +399,7 @@
         } else {
             dataToProcess = [self decompressBrotliData:data];
         }
-
+        
         // Attempt to parse the data as JSON
         NSError *jsonError;
         NSArray *json = [NSJSONSerialization JSONObjectWithData:dataToProcess options:kNilOptions error:&jsonError];
@@ -414,7 +414,7 @@
             NSString *currentDateString = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
             [currentDateString writeToFile:dateFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         }
-
+        
         if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             NSLog(@"HTTP status code: %ld", (long)httpResponse.statusCode);
@@ -442,7 +442,7 @@
 
 - (NSData *)decompressBrotliData:(NSData *)compressedData {
     
-
+    
     NSString *tempInputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tempBrCompressed.br"];
     NSString *tempOutputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tempBrDecompressed.json"];
     
@@ -463,9 +463,9 @@
     NSData *decompressedData = [NSData dataWithContentsOfFile:tempOutputPath];
     
     if (!decompressedData) {
-         NSLog(@"Failed to decompress data.");
-         return nil;
-     }
+        NSLog(@"Failed to decompress data.");
+        return nil;
+    }
     
     // Optionally, clean up the temporary files
     [[NSFileManager defaultManager] removeItemAtPath:tempInputPath error:nil];
@@ -541,6 +541,9 @@
                 if (imageData) {
                     NSString *location = imageData[@"location"];
                     NSString *name = imageData[@"name"];
+                    self.locationTextField.textColor = [NSColor blackColor]; // For example, set to red color
+                    self.nameTextField.textColor = [NSColor blackColor];
+                    
                     
                     // Check if location is <null> or is NSNull and replace with Unknown Location
                     if ([location isKindOfClass:[NSNull class]] || [location isEqualToString:@"<null>"]) {
@@ -554,12 +557,15 @@
                     
                     self.locationTextField.stringValue = location ?: @"Unknown Location";
                     self.nameTextField.stringValue = name ?: @"Unknown Name";
+                    self.locationTextField.textColor = [NSColor blackColor]; // For example, set to red color
+                    self.nameTextField.textColor = [NSColor blackColor];
+                    
                     
                     NSLog(@"After setting - Location: %@, Name: %@", self.locationTextField.stringValue, self.nameTextField.stringValue);
                 } else {
                     NSLog(@"Image data returned nil for URL: %@", [url absoluteString]);
                 }
-
+                
                 
             });
         }
@@ -591,7 +597,7 @@
                     }
                 }
             }
-
+            
         } else {
             NSLog(@"Error parsing JSON: %@", jsonError.localizedDescription);
         }
