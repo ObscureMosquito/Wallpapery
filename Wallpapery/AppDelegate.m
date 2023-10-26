@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Settings.h"
 
 @interface NSMenu (secret)
 - (void) _setHasPadding: (BOOL) pad onEdge: (int) whatEdge;
@@ -27,7 +28,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:25];
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:27];
     
     // Get the original image
     NSImage *statusItemImage = [NSImage imageNamed:@"status_icon.png"];
@@ -153,7 +154,7 @@
     [customView addSubview:nextWallpaperButton];
     
     // Create "Next Wallpaper" button
-    NSButton *quitButton = [[NSButton alloc] initWithFrame:NSMakeRect(166, 40, 48, 48)];
+    NSButton *quitButton = [[NSButton alloc] initWithFrame:NSMakeRect(167, 40, 48, 48)];
     
     // Load the image
     NSImage *quitButtonImage = [NSImage imageNamed:@"quit_button.png"];
@@ -186,6 +187,42 @@
     [refreshButton setAction:@selector(refreshWallpapers:)];
     
     [customView addSubview:refreshButton];
+
+    NSButton *settingsButton = [[NSButton alloc] initWithFrame:NSMakeRect(173, 5, 36, 36)];
+    
+    // Load the image
+    NSImage *settingsButtonImage = [NSImage imageNamed:@"settings_button.png"];
+    [settingsButtonImage setSize:NSMakeSize(36, 36)];
+    
+    // Create a new image of the same size to draw the shadowed version
+    NSImage *imageWithShadow = [[NSImage alloc] initWithSize:[settingsButtonImage size]];
+    [imageWithShadow lockFocus];
+    
+    // Create and set the custom shadow
+    NSShadow *customShadow = [[NSShadow alloc] init];
+    [customShadow setShadowColor:[[NSColor blackColor] colorWithAlphaComponent:1]]; // semi-transparent black
+    [customShadow setShadowOffset:NSMakeSize(0, -6)]; // Adjust as needed
+    [customShadow setShadowBlurRadius:3]; // Adjust as needed
+    [customShadow set];
+    
+    // Draw the original image
+    [settingsButtonImage drawAtPoint:NSZeroPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    
+    [imageWithShadow unlockFocus];
+
+    
+    [settingsButton setImage:settingsButtonImage];
+    [settingsButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
+    
+    [settingsButton setBordered:NO]; // Remove the border to make it look more like an image button
+    [settingsButton setButtonType:NSMomentaryChangeButton]; // Momentary change button type
+    
+    [settingsButton setTarget:self];
+    [settingsButton setAction:@selector(showSettingsWindow:)];
+
+
+    
+    [customView addSubview:settingsButton];
     
     NSMenuItem *viewMenuItem = [[NSMenuItem alloc] init];
     [viewMenuItem setView:customView];
@@ -215,7 +252,7 @@
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 56, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 56, 100, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -227,7 +264,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 36, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 36, 100, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
@@ -236,14 +273,30 @@
     [self.nameTextField setEditable:NO];
     [self.nameTextField setSelectable:NO];
     [customView addSubview:self.nameTextField];
-
+    
+    self.settingsController = [[Settings alloc] init];
 
 }
+
 
 - (void)statusItemClicked {
     
     [self.statusItem popUpStatusItemMenu:self.menu];
 }
+
+
+- (IBAction)showSettingsWindow:(id)sender {
+    [self.settingsWindow makeKeyAndOrderFront:self];
+}
+
+- (IBAction)setClientIdAction:(id)sender {
+    [self.settingsController saveClientId:self.clientIdTextField.stringValue];
+}
+
+- (IBAction)doneButtonAction:(id)sender {
+    [self.settingsController doneButtonClicked:sender];
+}
+
 
 - (void)setNewWallpaper {
     NSURL *newWallpaperURL = [self newWallpaperURL];
@@ -386,6 +439,21 @@
         }
     }
     
+    // Retrieve client-id from NSUserDefaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *clientId = [defaults stringForKey:@"UnsplashClientId"];
+    
+    if (clientId.length == 0) {
+        // Show an alert if the client-id is blank
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Missing API Key"];
+        [alert setInformativeText:@"You must enter your Unsplash API Key in settings!"];
+        [alert addButtonWithTitle:@"OK"];
+        [alert runModal];
+        return; // Exit the method without proceeding further
+    }
+    
+
     // If no valid cached data is available, proceed with API request
     NSURL *apiURL = [NSURL URLWithString:@"https://api.unsplash.com/photos/random?count=100&orientation=landscape"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:apiURL];
@@ -395,7 +463,8 @@
     [request setValue:@"gzip, deflate, br" forHTTPHeaderField:@"Accept-Encoding"];
     [request setValue:@"Unsplash%20Wallpapers/44 CFNetwork/1240.0.4.5 Darwin/20.6.0" forHTTPHeaderField:@"User-Agent"];
     [request setValue:@"en-gb" forHTTPHeaderField:@"Accept-Language"];
-    [request setValue:@"Client-ID -Z2ubPge09M3Zgk0-FgA0Dk4xP_3LLF6xhP0jLr2Ccw" forHTTPHeaderField:@"Authorization"];
+    NSString *authHeaderValue = [NSString stringWithFormat:@"Client-ID %@", clientId];
+    [request setValue:authHeaderValue forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
@@ -409,7 +478,7 @@
         } else {
             dataToProcess = [self decompressBrotliData:data];
         }
-
+        
         // Attempt to parse the data as JSON
         NSError *jsonError;
         NSArray *json = [NSJSONSerialization JSONObjectWithData:dataToProcess options:kNilOptions error:&jsonError];
@@ -424,13 +493,14 @@
             NSString *currentDateString = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
             [currentDateString writeToFile:dateFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         }
-
+        
         if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             NSLog(@"HTTP status code: %ld", (long)httpResponse.statusCode);
         }
     }] resume];
 }
+
 
 - (BOOL)macOSSupportsAutomaticBrotliDecompression {
     NSString *versionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
@@ -581,6 +651,7 @@
         }
     }] resume];
 }
+
 
 - (NSDictionary *)fetchJSONDataForImageWithURL:(NSURL *)url {
     NSString *appSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject];
