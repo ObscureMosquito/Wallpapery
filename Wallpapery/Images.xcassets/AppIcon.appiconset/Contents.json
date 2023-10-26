@@ -1,68 +1,68 @@
 {
   "images" : [
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-16.png",
+      "size" : "16x16",
       "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "16x16"
+      "filename" : "icon_16x16.png",
+      "scale" : "1x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-32.png",
+      "size" : "16x16",
       "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16"
+      "filename" : "icon_16x16@2x.png",
+      "scale" : "2x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-33.png",
+      "size" : "32x32",
       "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "32x32"
+      "filename" : "icon_32x32.png",
+      "scale" : "1x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-64.png",
+      "size" : "32x32",
       "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32"
+      "filename" : "icon_32x32@2x.png",
+      "scale" : "2x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-128.png",
+      "size" : "128x128",
       "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "128x128"
+      "filename" : "icon_128x128.png",
+      "scale" : "1x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-257.png",
+      "size" : "128x128",
       "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128"
+      "filename" : "icon_128x128@2x.png",
+      "scale" : "2x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-256.png",
+      "size" : "256x256",
       "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "256x256"
+      "filename" : "icon_256x256.png",
+      "scale" : "1x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-513.png",
+      "size" : "256x256",
       "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256"
+      "filename" : "icon_256x256@2x.png",
+      "scale" : "2x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-512.png",
+      "size" : "512x512",
       "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "512x512"
+      "filename" : "icon_512x512.png",
+      "scale" : "1x"
     },
     {
-      "filename" : "DALL_E_2023-10-16_15.49.20_-_Render_of_an_old-fashioned_wooden_frame_with_a_rotating_wallpaper_inside__symbolizing_changing_wallpapers._The_design_takes_inspiration_from_the_skeuo-removebg-1024.png",
+      "size" : "512x512",
       "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "512x512"
+      "filename" : "icon_512x512@2x.png",
+      "scale" : "2x"
     }
   ],
   "info" : {
-    "author" : "xcode",
-    "version" : 1
+    "version" : 1,
+    "author" : "xcode"
   }
 }
