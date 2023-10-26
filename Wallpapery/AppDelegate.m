@@ -174,7 +174,7 @@
     
     // Load the image
     NSImage *refreshButtonImage = [NSImage imageNamed:@"refresh_button.png"];
-    [refreshButtonImage setSize:NSMakeSize(54, 54)]; // Set the image size to 40x40
+    [refreshButtonImage setSize:NSMakeSize(53, 53)]; // Set the image size to 40x40
     
     [refreshButton setImage:refreshButtonImage];
     [refreshButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
