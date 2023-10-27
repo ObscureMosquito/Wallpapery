@@ -7,9 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "Settings.h"
 
 @interface NSMenu (secret)
+
 - (void) _setHasPadding: (BOOL) pad onEdge: (int) whatEdge;
+
 @end
 
 @interface AppDelegate ()
@@ -27,7 +30,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:25];
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:27];
     
     // Get the original image
     NSImage *statusItemImage = [NSImage imageNamed:@"status_icon.png"];
@@ -59,7 +62,7 @@
     NSView *customView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 295, 310)];
     customView.layer.backgroundColor = CGColorGetConstantColor(kCGColorClear);
     customView.wantsLayer = YES;
-    NSImage *backgroundImage = [NSImage imageNamed:@"backround_2.jpg"];
+    NSImage *backgroundImage = [NSImage imageNamed:@"backround2.png"];
     customView.layer.contents = backgroundImage;
     customView.layer.contentsGravity = kCAGravityResizeAspectFill; // This line ensures the image fills the entire view.
     
@@ -68,7 +71,7 @@
         [self.menu _setHasPadding: NO onEdge: 1];
         [self.menu _setHasPadding: NO onEdge: 3];
     }
-
+    
     
     // Add large image view placeholder for current wallpaper
     self.imageViewPlaceholder = [[NSImageView alloc] initWithFrame:NSMakeRect(49, 159, 197, 124)];
@@ -77,16 +80,16 @@
     self.imageViewPlaceholder.imageScaling = NSImageScaleAxesIndependently;
     NSImage *currentWallpaperImage = [[NSImage alloc] initWithContentsOfURL:[self currentWallpaperURL]];
     self.imageViewPlaceholder.image = currentWallpaperImage;
-
+    
     
     // Add the wallpaper imageView to the customView first
     [customView addSubview:self.imageViewPlaceholder];
     
     NSImage *originalFrameImage = [NSImage imageNamed:@"frame.png"];
-
+    
     // Create a new image with the desired size (for example, 300 width and 475 height)
     NSImage *resizedFrameImage = [[NSImage alloc] initWithSize:NSMakeSize(275, 165)]; // Adjust width as needed
-
+    
     [resizedFrameImage lockFocus];
     // This will stretch the originalFrameImage to fill the entire size of resizedFrameImage
     [originalFrameImage drawInRect:NSMakeRect(0, 0, resizedFrameImage.size.width, resizedFrameImage.size.height)
@@ -94,23 +97,23 @@
                          operation:NSCompositeSourceOver
                           fraction:1.0];
     [resizedFrameImage unlockFocus];
-
+    
     // Create the imageView for the frame using the resized image
     NSImageView *frameImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(10, 135, 275, 170)];
     frameImageView.image = resizedFrameImage;
     frameImageView.wantsLayer = YES;
-
+    
     // Create and set the shadow for the imageView
     NSShadow *frameShadow = [[NSShadow alloc] init];
     frameShadow.shadowColor = [NSColor blackColor];  // You can change this to any color you want
     frameShadow.shadowOffset = NSMakeSize(0, -4.0);  // This will determine the direction and distance of the shadow
     frameShadow.shadowBlurRadius = 5.0;  // This will determine how soft the shadow edges will be
-
+    
     frameImageView.shadow = frameShadow;
-
+    
     // Add the frame imageView to the customView
     [customView addSubview:frameImageView];
-
+    
     // Add "Set as Wallpaper" button below the label
     NSButton *setWallpaperButton = [[NSButton alloc] initWithFrame:NSMakeRect(217, 68, 60, 60)]; // Adjust the frame to 40x40
     
@@ -131,7 +134,7 @@
     
     
     [customView addSubview:setWallpaperButton];
-
+    
     
     // Create "Next Wallpaper" button
     NSButton *nextWallpaperButton = [[NSButton alloc] initWithFrame:NSMakeRect(218, 3, 60, 60)];
@@ -153,7 +156,7 @@
     [customView addSubview:nextWallpaperButton];
     
     // Create "Next Wallpaper" button
-    NSButton *quitButton = [[NSButton alloc] initWithFrame:NSMakeRect(166, 40, 48, 48)];
+    NSButton *quitButton = [[NSButton alloc] initWithFrame:NSMakeRect(167, 40, 48, 48)];
     
     // Load the image
     NSImage *quitButtonImage = [NSImage imageNamed:@"quit_button.png"];
@@ -174,7 +177,7 @@
     
     // Load the image
     NSImage *refreshButtonImage = [NSImage imageNamed:@"refresh_button.png"];
-    [refreshButtonImage setSize:NSMakeSize(54, 54)]; // Set the image size to 40x40
+    [refreshButtonImage setSize:NSMakeSize(53, 53)]; // Set the image size to 40x40
     
     [refreshButton setImage:refreshButtonImage];
     [refreshButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
@@ -187,25 +190,71 @@
     
     [customView addSubview:refreshButton];
     
+    NSButton *settingsButton = [[NSButton alloc] initWithFrame:NSMakeRect(173, 5, 36, 36)];
+    
+    // Load the image
+    NSImage *settingsButtonImage = [NSImage imageNamed:@"settings_button.png"];
+    [settingsButtonImage setSize:NSMakeSize(36, 36)];
+    
+    // Create a new image of the same size to draw the shadowed version
+    NSImage *imageWithShadow = [[NSImage alloc] initWithSize:[settingsButtonImage size]];
+    [imageWithShadow lockFocus];
+    
+    // Create and set the custom shadow
+    NSShadow *customShadow = [[NSShadow alloc] init];
+    [customShadow setShadowColor:[[NSColor blackColor] colorWithAlphaComponent:1]]; // semi-transparent black
+    [customShadow setShadowOffset:NSMakeSize(0, -6)]; // Adjust as needed
+    [customShadow setShadowBlurRadius:3]; // Adjust as needed
+    [customShadow set];
+    
+    // Draw the original image
+    [settingsButtonImage drawAtPoint:NSZeroPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    
+    [imageWithShadow unlockFocus];
+    
+    
+    [settingsButton setImage:settingsButtonImage];
+    [settingsButton setImagePosition:NSImageOnly]; // Ensure only the image is displayed without any text
+    
+    [settingsButton setBordered:NO]; // Remove the border to make it look more like an image button
+    [settingsButton setButtonType:NSMomentaryChangeButton]; // Momentary change button type
+    
+    [settingsButton setTarget:self];
+    [settingsButton setAction:@selector(showSettingsWindow:)];
+    
+    
+    
+    [customView addSubview:settingsButton];
     
     NSMenuItem *viewMenuItem = [[NSMenuItem alloc] init];
     [viewMenuItem setView:customView];
     [self.menu addItem:viewMenuItem];
-
-    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-38, -18, 240, 155)];
-
-
+    
+    NSImageView *plaqueImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(-38, -17, 240, 155)];
+    
+    // Create and configure the shadow
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowColor:[NSColor blackColor]];  // Shadow color
+    [shadow setShadowOffset:NSMakeSize(0, -10)];  // 0 for x-axis and -10 for y-axis to make it appear at the bottom
+    [shadow setShadowBlurRadius:5.0];             // Adjust as needed
+    
+    // Apply the shadow to the image view
+    [plaqueImageView setWantsLayer:YES];          // Necessary for shadow
+    [plaqueImageView setShadow:shadow];
+    
     [plaqueImageView setImage:[NSImage imageNamed:@"sign.png"]];
     plaqueImageView.imageScaling = NSImageScaleAxesIndependently; // This will stretch the image
     [customView addSubview:plaqueImageView];
-
-
+    
+    
+    
+    //Font
     NSFont *customFont = [NSFont fontWithName:@"American Typewriter" size:14];
     
     
     //Location
     
-    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 56, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 56, 100, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
     [self.locationTextField setTextColor:[NSColor darkGrayColor]];
@@ -217,7 +266,7 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 36, 110, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 36, 100, 20)]; // Adjust the frame so it fits inside the plaque
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
     [self.nameTextField setTextColor:[NSColor darkGrayColor]];
@@ -227,13 +276,151 @@
     [self.nameTextField setSelectable:NO];
     [customView addSubview:self.nameTextField];
     
+    self.settingsController = [[Settings alloc] init];
+    self.wallpaperTimerManager = [[Timer alloc] init];
     
 }
 
+
 - (void)statusItemClicked {
-    
     [self.statusItem popUpStatusItemMenu:self.menu];
 }
+
+
+- (IBAction)showSettingsWindow:(id)sender {
+    [self.settingsWindow center];
+    [self.settingsWindow setLevel:NSFloatingWindowLevel];
+    [self.settingsWindow makeKeyAndOrderFront:self];
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [self setupInterface];
+}
+
+- (IBAction)setClientIdAction:(id)sender {
+    [self.settingsController saveClientId:self.clientIdTextField.stringValue];
+}
+
+- (IBAction)doneButtonAction:(id)sender {
+    [self.settingsController doneButtonClicked:sender];
+}
+
+- (IBAction)modeChangedAction:(id)sender {
+    NSPopUpButton *popupButton = (NSPopUpButton *)sender;
+    NSString *selectedTitle = popupButton.selectedItem.title;
+    
+    // Save mode to UserDefaults
+    [[NSUserDefaults standardUserDefaults] setObject:selectedTitle forKey:@"modePreference"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSLog(@"Selected mode: %@", selectedTitle);
+    
+    if ([selectedTitle isEqualToString:@"Automatic"]) {
+        // Get the slider's value and convert it to seconds
+        NSTimeInterval selectedInterval = self.refreshTimeSlider.doubleValue;
+        [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:selectedInterval];
+    } else {
+        [self.wallpaperTimerManager stopAutomaticWallpaperChange];
+    }
+}
+
+
+
+- (IBAction)sliderValueChanged:(NSSlider *)slider {
+    // Get the slider's value in minutes
+    double minutes = [slider doubleValue];
+    
+    // Update the label with the slider's minute value
+    self.sliderValueLabel.stringValue = [NSString stringWithFormat:@"%.0f minutes", minutes];
+    
+    // Save the slider's value to UserDefaults
+    [[NSUserDefaults standardUserDefaults] setDouble:minutes forKey:@"sliderValue"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *selectedMode = [[NSUserDefaults standardUserDefaults] objectForKey:@"modePreference"];
+    if ([selectedMode isEqualToString:@"Automatic"]) {
+        // Check if the timer is currently running
+        if (self.wallpaperTimerManager.isTimerRunning) {
+            // Stop the current timer if it's running
+            [self.wallpaperTimerManager stopAutomaticWallpaperChange];
+            
+            // Restart the timer with the new interval
+            [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:minutes];
+        }
+        
+    }
+}
+
+- (void)setupInterface {
+    // Get the saved slider value, defaulting to a default value (e.g., 5) if not found
+    double savedSliderValue = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sliderValue"];
+    if(savedSliderValue == 0) {
+        savedSliderValue = 60; // Default value
+    }
+    
+    // Set the slider's value and the label
+    [self.refreshTimeSlider setDoubleValue:savedSliderValue];
+    self.sliderValueLabel.stringValue = [NSString stringWithFormat:@"%.0f minutes", savedSliderValue];
+    
+    // Fetch saved clientId and set it to the clientIdTextField
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *clientId = [defaults objectForKey:@"UnsplashClientId"];
+    NSLog(@"Retrieved clientId: %@", clientId);
+    
+    [self.clientIdTextField setStringValue:clientId];
+}
+
+
+- (void)setRandomWallpaper {
+    // Step 1: Pick a random wallpaper
+    if (!self.wallpapersArray || self.wallpapersArray.count == 0) {
+        NSLog(@"Wallpapers array is empty or not initialized.");
+        return;
+    }
+    
+    NSDictionary *randomWallpaper = self.wallpapersArray[arc4random_uniform((uint32_t)self.wallpapersArray.count)];
+    
+    // Step 2: Get its URL
+    NSString *rawURLString = randomWallpaper[@"urls"][@"raw"];
+    if (!rawURLString) {
+        NSLog(@"Failed to retrieve raw URL string from selected wallpaper.");
+        return;
+    }
+    NSURL *rawURL = [NSURL URLWithString:rawURLString];
+    
+    // Step 3-5: Download, save locally, and set as desktop background
+    // Using the logic from `setNewWallpaper` function
+    
+    NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *wallpaperyDir = [appSupportDir stringByAppendingPathComponent:@"Wallpapery"];
+    NSString *currentWallpaperNameFilePath = [wallpaperyDir stringByAppendingPathComponent:@"currentWallpaperName.txt"];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:currentWallpaperNameFilePath]) {
+        NSString *previousWallpaperName = [NSString stringWithContentsOfFile:currentWallpaperNameFilePath encoding:NSUTF8StringEncoding error:nil];
+        if (previousWallpaperName) {
+            NSString *previousWallpaperPath = [wallpaperyDir stringByAppendingPathComponent:previousWallpaperName];
+            [[NSFileManager defaultManager] removeItemAtPath:previousWallpaperPath error:nil];
+        }
+    }
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:wallpaperyDir]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:wallpaperyDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    NSString *randomWallpaperName = [NSString stringWithFormat:@"wallpaper_%lu.jpg", (unsigned long)arc4random_uniform(UINT32_MAX)];
+    [randomWallpaperName writeToFile:currentWallpaperNameFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+    NSURL *randomWallpaperURL = [NSURL fileURLWithPath:[wallpaperyDir stringByAppendingPathComponent:randomWallpaperName]];
+    
+    [[[NSURLSession sharedSession] dataTaskWithURL:rawURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (data) {
+            [data writeToURL:randomWallpaperURL atomically:YES];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setDesktopImageWithLocalURL:randomWallpaperURL];
+            });
+        }
+    }] resume];
+}
+
 
 - (void)setNewWallpaper {
     NSURL *newWallpaperURL = [self newWallpaperURL];
@@ -376,6 +563,27 @@
         }
     }
     
+    // Retrieve client-id from NSUserDefaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *clientId = [defaults stringForKey:@"UnsplashClientId"];
+    
+    if (clientId.length == 0) {
+        // Show an alert if the client-id is blank
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Missing API Key"];
+        [alert setInformativeText:@"You must enter your Unsplash API Key in settings!"];
+        [alert addButtonWithTitle:@"OK"];
+        [alert addButtonWithTitle:@"Fix"];
+        
+        NSModalResponse response = [alert runModal];
+        
+        if (response == NSAlertSecondButtonReturn) {
+            [self showSettingsWindow:self];
+        }
+        
+        return;
+    }
+    
     // If no valid cached data is available, proceed with API request
     NSURL *apiURL = [NSURL URLWithString:@"https://api.unsplash.com/photos/random?count=100&orientation=landscape"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:apiURL];
@@ -385,7 +593,8 @@
     [request setValue:@"gzip, deflate, br" forHTTPHeaderField:@"Accept-Encoding"];
     [request setValue:@"Unsplash%20Wallpapers/44 CFNetwork/1240.0.4.5 Darwin/20.6.0" forHTTPHeaderField:@"User-Agent"];
     [request setValue:@"en-gb" forHTTPHeaderField:@"Accept-Language"];
-    [request setValue:@"Client-ID -Z2ubPge09M3Zgk0-FgA0Dk4xP_3LLF6xhP0jLr2Ccw" forHTTPHeaderField:@"Authorization"];
+    NSString *authHeaderValue = [NSString stringWithFormat:@"Client-ID %@", clientId];
+    [request setValue:authHeaderValue forHTTPHeaderField:@"Authorization"];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
@@ -421,6 +630,7 @@
         }
     }] resume];
 }
+
 
 - (BOOL)macOSSupportsAutomaticBrotliDecompression {
     NSString *versionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
@@ -572,6 +782,7 @@
     }] resume];
 }
 
+
 - (NSDictionary *)fetchJSONDataForImageWithURL:(NSURL *)url {
     NSString *appSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject];
     NSString *wallpaperyDirectory = [appSupportDirectory stringByAppendingPathComponent:@"Wallpapery"];
@@ -606,6 +817,62 @@
     }
     
     return nil;
+}
+
+- (IBAction)helpButtonClicked:(id)sender {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"What is this?"];
+    [alert setInformativeText:@"In order to use Wallpapery, you must obtain your own Unsplash API key. It is free of charge and offers up to 50 thirty-wallpaper pack recharges a day."];
+    [alert addButtonWithTitle:@"Tell me how"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert addButtonWithTitle:@"Why?"];
+    
+    NSModalResponse response = [alert runModal];
+    
+    switch(response) {
+        case NSAlertFirstButtonReturn: {
+            NSAlert *howAlert = [[NSAlert alloc] init];
+            [howAlert setMessageText:@"How to get an API Key?"];
+            [howAlert setInformativeText:@"You will have to create an account on Unsplash's developer website, free of charge, create a project, and then input the given client id into Wallpapery's settings."];
+            [howAlert addButtonWithTitle:@"Go"];
+            [howAlert addButtonWithTitle:@"Cancel"];
+            
+            NSModalResponse howResponse = [howAlert runModal];
+            
+            if (howResponse == NSAlertFirstButtonReturn) {
+                // "Go" button was pressed
+                [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://unsplash.com/developers"]];
+                [self.settingsWindow orderOut:nil];
+            }
+            break;
+        }
+        case NSAlertThirdButtonReturn: {
+            NSAlert *whyAlert = [[NSAlert alloc] init];
+            [whyAlert setMessageText:@"Why API Key?"];
+            [whyAlert setInformativeText:@"Wallpapery needs Unsplash' permission to use their wallpapers on your computer. An API key (or client id) is the means by which Wallpapery identifies itself."];
+            [whyAlert addButtonWithTitle:@"Tell me how"];
+            [whyAlert addButtonWithTitle:@"Cancel"];
+            
+            NSModalResponse whyResponse = [whyAlert runModal];
+            
+            if (whyResponse == NSAlertFirstButtonReturn) {
+                NSAlert *howAlert = [[NSAlert alloc] init];
+                [howAlert setMessageText:@"How to get an API Key?"];
+                [howAlert setInformativeText:@"You will have to create an account on Unsplash's developer website, free of charge, create a project, and then input the given client id into Wallpapery's settings."];
+                [howAlert addButtonWithTitle:@"Go"];
+                [howAlert addButtonWithTitle:@"Cancel"];
+                
+                NSModalResponse howResponse = [howAlert runModal];
+                
+                if (howResponse == NSAlertFirstButtonReturn) {
+                    // "Go" button was pressed
+                    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://unsplash.com/developers"]];
+                    [self.settingsWindow orderOut:nil];
+                }
+            }
+            break;
+        }
+    }
 }
 
 
