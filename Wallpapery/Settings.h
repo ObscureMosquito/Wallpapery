@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet NSButton *doneButton;
 
+
 - (IBAction)doneButtonClicked:(id)sender;
 - (void)saveClientId:(NSString *)clientId;
 

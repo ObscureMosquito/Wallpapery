@@ -61,7 +61,7 @@
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8NW-qr-rIS">
                         <rect key="frame" x="250" y="191" width="54" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" title="Set Key" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TdH-Qr-DjB">
+                        <buttonCell key="cell" type="squareTextured" title="Set Key" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" sound="Frog" inset="2" id="TdH-Qr-DjB">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -90,7 +90,7 @@
                     <slider appearanceType="lightContent" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktz-y8-FE8">
                         <rect key="frame" x="9" y="126" width="287" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="5" maxValue="1440" doubleValue="720" tickMarkPosition="above" sliderType="linear" id="4Ac-Vf-kkY"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="1440" doubleValue="720" tickMarkPosition="above" sliderType="linear" id="4Ac-Vf-kkY"/>
                         <connections>
                             <action selector="sliderValueChanged:" target="Voe-Tx-rLC" id="5HQ-wD-0Zs"/>
                         </connections>
@@ -153,4 +153,7 @@
         </window>
         <userDefaultsController representsSharedInstance="YES" id="Wtc-iy-9sg"/>
     </objects>
+    <resources>
+        <sound name="Frog"/>
+    </resources>
 </document>

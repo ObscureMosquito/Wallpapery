@@ -26,6 +26,8 @@
 }
 
 - (void)startAutomaticWallpaperChangeWithCallbackForInterval:(NSTimeInterval)interval {
+    self.hasSentNotification = NO;
+    NSLog(@"Interval passed: %f", interval);
     self.timeInterval = interval * 60.0; // Store the interval. Convert minutes to seconds.
     self.timeLeft = self.timeInterval;
     
@@ -49,6 +51,12 @@
     
     self.timeLeft -= 5.0; // Decrease the time left by 5 seconds
     
+    // If 1 minute (60 seconds) is remaining, send a notification
+    if (self.timeLeft <= 60.0 && !self.hasSentNotification) {
+        [self sendNotification];
+        self.hasSentNotification = YES;  // Set flag to true after sending
+    }
+    
     // Log the time left
     NSLog(@"Time left: %f seconds", self.timeLeft);
     
@@ -66,19 +74,13 @@
         // Restart the timer by invalidating the current one and recalling this method
         [timer invalidate];
         self.wallpaperTimer = nil;
-        [self startAutomaticWallpaperChangeWithCallbackForInterval:self.timeInterval];
+        [self startAutomaticWallpaperChangeWithCallbackForInterval:self.timeInterval / 60.0];
     }
 }
-
 
 - (void)stopAutomaticWallpaperChange {
     [self.wallpaperTimer invalidate];
     self.wallpaperTimer = nil;
-}
-
-
-- (void)handleWallpaperChange {
-    NSLog(@"hay cacaca");
 }
 
 
@@ -104,6 +106,40 @@
         }
     });
 }
+
+- (void)sendNotification {
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = @"Wallpaper Update";
+    notification.informativeText = @"Your wallpaper will be changed in 1 minute";
+    notification.hasActionButton = YES;
+    notification.actionButtonTitle = @"Cancel";
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+}
+
+#pragma mark - NSUserNotificationCenterDelegate
+
+- (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification {
+    switch (notification.activationType) {
+        case NSUserNotificationActivationTypeActionButtonClicked:
+            // The "Cancel" button was clicked
+            [self stopAutomaticWallpaperChange];
+            
+            // Change the mode to manual
+            [[NSUserDefaults standardUserDefaults] setObject:@"Manual" forKey:@"modePreference"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            // Optional: Refresh UI if needed
+            
+            break;
+            
+        default:
+            // Handle other types of activation if necessary
+            break;
+    }
+}
+
 
 
 @end

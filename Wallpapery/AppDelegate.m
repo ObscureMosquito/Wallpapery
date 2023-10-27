@@ -274,7 +274,7 @@
     
     //Time till update
     
-    self.timeTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 20, 125, 20)];
+    self.timeTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 19, 125, 20)];
     [self.timeTextField setStringValue:@""];
     [self.timeTextField setFont:customFont];
     [self.timeTextField setTextColor:[NSColor blackColor]];
@@ -301,6 +301,8 @@
         }
         
         [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:savedSliderValue];
+        
+        
     }
 
 }
