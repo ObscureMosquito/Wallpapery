@@ -278,6 +278,16 @@
     
     self.settingsController = [[Settings alloc] init];
     self.wallpaperTimerManager = [[Timer alloc] init];
+    
+    NSString *savedMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"modePreference"];
+    if ([savedMode isEqualToString:@"Automatic"]) {
+        double savedSliderValue = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sliderValue"];
+        if(savedSliderValue == 0) {
+            savedSliderValue = 60; // Default value
+        }
+        
+        [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:savedSliderValue];
+    }
 
 }
 
@@ -304,16 +314,15 @@
 }
 
 - (IBAction)modeChangedAction:(id)sender {
-    NSPopUpButton *popupButton = (NSPopUpButton *)sender;
-    NSString *selectedTitle = popupButton.selectedItem.title;
+    NSString *selectedMode = self.modeSelector.selectedItem.title;
     
-    // Save mode to UserDefaults
-    [[NSUserDefaults standardUserDefaults] setObject:selectedTitle forKey:@"modePreference"];
+    // Save the mode to UserDefaults
+    [[NSUserDefaults standardUserDefaults] setObject:selectedMode forKey:@"modePreference"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSLog(@"Selected mode: %@", selectedTitle);
+    NSLog(@"Saved mode: %@", selectedMode);
     
-    if ([selectedTitle isEqualToString:@"Automatic"]) {
+    if ([selectedMode isEqualToString:@"Automatic"]) {
         // Get the slider's value and convert it to seconds
         NSTimeInterval selectedInterval = self.refreshTimeSlider.doubleValue;
         [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:selectedInterval];
@@ -366,11 +375,20 @@
     if (!clientId || [clientId length] == 0) {
         clientId = @"Enter your client id...";
     }
-
+    
     NSLog(@"Retrieved clientId: %@", clientId);
-
+    
     [self.clientIdTextField setStringValue:clientId];
+    
+    // Set the mode based on saved preference
+    
+    NSString *savedMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"modePreference"];
+    if (savedMode) {
+        [self.modeSelector selectItemWithTitle:savedMode];
+    }
+    
 }
+
 
 
 - (void)setRandomWallpaper {
@@ -443,8 +461,9 @@
         }
     }
     
-    // If no new wallpaper URL, return
-    if (!newWallpaperURL) {
+    // If no new wallpaper URL, show an alert and return
+    if (!newWallpaperURL || ![self clientIdIsSet]) {
+        [self showMissingClientIdAlert];
         return;
     }
     
@@ -476,7 +495,11 @@
     }
 }
 
-
+- (BOOL)clientIdIsSet {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *clientId = [defaults objectForKey:@"UnsplashClientId"];
+    return clientId && clientId.length > 0;
+}
 
 - (void)setDesktopImageWithLocalURL:(NSURL *)localURL {
     NSError *error;
@@ -576,12 +599,11 @@
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:@"Missing API Key"];
         [alert setInformativeText:@"You must enter your Unsplash API Key in settings, Wallpapery will not work without this."];
-        [alert addButtonWithTitle:@"OK"];
         [alert addButtonWithTitle:@"Fix"];
         
         NSModalResponse response = [alert runModal];
         
-        if (response == NSAlertSecondButtonReturn) {
+        if (response == NSAlertFirstButtonReturn) {
             [self showSettingsWindow:self];
         }
         
@@ -631,8 +653,35 @@
         if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             NSLog(@"HTTP status code: %ld", (long)httpResponse.statusCode);
+            
+            if (httpResponse.statusCode != 200) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self showInvalidClientIdAlert];
+                });
+            }
         }
     }] resume];
+}
+
+- (void)showInvalidClientIdAlert {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"Invalid API Key"];
+    [alert setInformativeText:@"Your client-id is invalid or was not accepted by Unsplash, please make sure you entered it correctly without any extraneous characters."];
+    [alert addButtonWithTitle:@"Fix"];
+    [alert addButtonWithTitle:@"Cancel"];
+    
+    NSInteger modalResult = [alert runModal];
+    
+    switch (modalResult) {
+        case NSAlertFirstButtonReturn: // Fix button
+            [self showSettingsWindow:self];
+            break;
+        case NSAlertSecondButtonReturn: // Cancel button
+            // Handle any logic for the cancel button, if needed
+            break;
+        default:
+            break;
+    }
 }
 
 
@@ -690,16 +739,48 @@
 
 
 - (IBAction)displayRandomWallpaper:(id)sender {
+    if (![self.wallpapersArray isKindOfClass:[NSArray class]] || self.wallpapersArray.count == 0) {
+        // Handle the error - display an alert about the missing client ID
+        [self showMissingClientIdAlert];
+        return;
+    }
+    
     NSLog(@"Wallpapers count: %lu", (unsigned long)self.wallpapersArray.count);
-    if (self.wallpapersArray.count > 0) {
-        NSDictionary *randomWallpaper = self.wallpapersArray[arc4random_uniform((uint32_t)self.wallpapersArray.count)];
-        NSString *smallURLString = randomWallpaper[@"urls"][@"small"];
-        NSLog(@"Randomly selected wallpaper URL: %@", smallURLString);
-        
-        if (smallURLString) {
-            self.currentWallpaperData = randomWallpaper;
-            [self fetchAndDisplayImageFromURL:[NSURL URLWithString:smallURLString]];
-        }
+    
+    id randomElement = self.wallpapersArray[arc4random_uniform((uint32_t)self.wallpapersArray.count)];
+    
+    if (![randomElement isKindOfClass:[NSDictionary class]]) {
+        // Handle the error - the element isn't a dictionary as expected
+        [self showMissingClientIdAlert];
+        return;
+    }
+    
+    NSDictionary *randomWallpaper = (NSDictionary *)randomElement;
+    NSString *smallURLString = randomWallpaper[@"urls"][@"small"];
+    NSLog(@"Randomly selected wallpaper URL: %@", smallURLString);
+    
+    if (!smallURLString) {
+        // Handle the error - the URL is missing
+        [self showMissingClientIdAlert];
+        return;
+    }
+    
+    self.currentWallpaperData = randomWallpaper;
+    [self fetchAndDisplayImageFromURL:[NSURL URLWithString:smallURLString]];
+}
+
+- (void)showMissingClientIdAlert {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"Missing API Key"];
+    [alert setInformativeText:@"You must enter your Unsplash API Key in settings, Wallpapery will not work without this."];
+    [alert addButtonWithTitle:@"Fix"];
+    
+    NSInteger modalResult = [alert runModal];
+    
+    switch (modalResult) {
+        case NSAlertFirstButtonReturn: // Fix button
+            [self showSettingsWindow:self];
+            break;
     }
 }
 
