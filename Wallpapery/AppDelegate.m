@@ -46,7 +46,6 @@
                        fraction:1.0];
     [resizedImage unlockFocus];
     
-    // Set the resized image to the status item
     self.statusItem.image = resizedImage;
     
     [self.statusItem setTarget:self];
@@ -81,8 +80,7 @@
     NSImage *currentWallpaperImage = [[NSImage alloc] initWithContentsOfURL:[self currentWallpaperURL]];
     self.imageViewPlaceholder.image = currentWallpaperImage;
 
-    
-    // Add the wallpaper imageView to the customView first
+
     [customView addSubview:self.imageViewPlaceholder];
     
     NSImage *originalFrameImage = [NSImage imageNamed:@"frame.png"];
@@ -91,7 +89,6 @@
     NSImage *resizedFrameImage = [[NSImage alloc] initWithSize:NSMakeSize(275, 165)]; // Adjust width as needed
 
     [resizedFrameImage lockFocus];
-    // This will stretch the originalFrameImage to fill the entire size of resizedFrameImage
     [originalFrameImage drawInRect:NSMakeRect(0, 0, resizedFrameImage.size.width, resizedFrameImage.size.height)
                           fromRect:NSZeroRect
                          operation:NSCompositeSourceOver
