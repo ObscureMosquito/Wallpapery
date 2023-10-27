@@ -363,6 +363,10 @@
     // Fetch saved clientId and set it to the clientIdTextField
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *clientId = [defaults objectForKey:@"UnsplashClientId"];
+    if (!clientId || [clientId length] == 0) {
+        clientId = @"Enter your client id...";
+    }
+
     NSLog(@"Retrieved clientId: %@", clientId);
 
     [self.clientIdTextField setStringValue:clientId];
@@ -571,7 +575,7 @@
         // Show an alert if the client-id is blank
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:@"Missing API Key"];
-        [alert setInformativeText:@"You must enter your Unsplash API Key in settings!"];
+        [alert setInformativeText:@"You must enter your Unsplash API Key in settings, Wallpapery will not work without this."];
         [alert addButtonWithTitle:@"OK"];
         [alert addButtonWithTitle:@"Fix"];
         

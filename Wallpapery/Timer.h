@@ -21,6 +21,5 @@
 
 - (void)startAutomaticWallpaperChangeWithCallbackForInterval:(NSTimeInterval)interval;
 - (void)stopAutomaticWallpaperChange;
-- (void)startAutomaticWallpaperChangeWithCallback;
 
 @end
