@@ -3,4 +3,4 @@
 <h1>Wallpapery</h1>
 </div>
 
-Simple wallpaper application for older MacOS versions, select your favourite wallpaper and set wit within the app or automatically switch them around once in a while.
+Simple wallpaper application for older MacOS versions, select your favourite wallpaper and set it within the app or automatically switch them around once in a while.
