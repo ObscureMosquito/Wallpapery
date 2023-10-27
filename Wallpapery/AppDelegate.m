@@ -10,7 +10,9 @@
 #import "Settings.h"
 
 @interface NSMenu (secret)
+
 - (void) _setHasPadding: (BOOL) pad onEdge: (int) whatEdge;
+
 @end
 
 @interface AppDelegate ()
@@ -275,18 +277,22 @@
     [customView addSubview:self.nameTextField];
     
     self.settingsController = [[Settings alloc] init];
+    self.wallpaperTimerManager = [[Timer alloc] init];
 
 }
 
 
 - (void)statusItemClicked {
-    
     [self.statusItem popUpStatusItemMenu:self.menu];
 }
 
 
 - (IBAction)showSettingsWindow:(id)sender {
+    [self.settingsWindow center];
+    [self.settingsWindow setLevel:NSFloatingWindowLevel];
     [self.settingsWindow makeKeyAndOrderFront:self];
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [self setupInterface];
 }
 
 - (IBAction)setClientIdAction:(id)sender {
@@ -295,6 +301,124 @@
 
 - (IBAction)doneButtonAction:(id)sender {
     [self.settingsController doneButtonClicked:sender];
+}
+
+- (IBAction)modeChangedAction:(id)sender {
+    NSPopUpButton *popupButton = (NSPopUpButton *)sender;
+    NSString *selectedTitle = popupButton.selectedItem.title;
+    
+    // Save mode to UserDefaults
+    [[NSUserDefaults standardUserDefaults] setObject:selectedTitle forKey:@"modePreference"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSLog(@"Selected mode: %@", selectedTitle);
+    
+    if ([selectedTitle isEqualToString:@"Automatic"]) {
+        // Get the slider's value and convert it to seconds
+        NSTimeInterval selectedInterval = self.refreshTimeSlider.doubleValue;
+        [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:selectedInterval];
+    } else {
+        [self.wallpaperTimerManager stopAutomaticWallpaperChange];
+    }
+}
+
+
+
+- (IBAction)sliderValueChanged:(NSSlider *)slider {
+    // Get the slider's value in minutes
+    double minutes = [slider doubleValue];
+    
+    // Update the label with the slider's minute value
+    self.sliderValueLabel.stringValue = [NSString stringWithFormat:@"%.0f minutes", minutes];
+    
+    // Save the slider's value to UserDefaults
+    [[NSUserDefaults standardUserDefaults] setDouble:minutes forKey:@"sliderValue"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *selectedMode = [[NSUserDefaults standardUserDefaults] objectForKey:@"modePreference"];
+    if ([selectedMode isEqualToString:@"Automatic"]) {
+        // Check if the timer is currently running
+        if (self.wallpaperTimerManager.isTimerRunning) {
+            // Stop the current timer if it's running
+            [self.wallpaperTimerManager stopAutomaticWallpaperChange];
+            
+            // Restart the timer with the new interval
+            [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:minutes];
+        }
+
+    }
+}
+
+- (void)setupInterface {
+    // Get the saved slider value, defaulting to a default value (e.g., 5) if not found
+    double savedSliderValue = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sliderValue"];
+    if(savedSliderValue == 0) {
+        savedSliderValue = 60; // Default value
+    }
+    
+    // Set the slider's value and the label
+    [self.refreshTimeSlider setDoubleValue:savedSliderValue];
+    self.sliderValueLabel.stringValue = [NSString stringWithFormat:@"%.0f minutes", savedSliderValue];
+    
+    // Fetch saved clientId and set it to the clientIdTextField
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *clientId = [defaults objectForKey:@"UnsplashClientId"];
+    NSLog(@"Retrieved clientId: %@", clientId);
+
+    [self.clientIdTextField setStringValue:clientId];
+}
+
+
+- (void)setRandomWallpaper {
+    // Step 1: Pick a random wallpaper
+    if (!self.wallpapersArray || self.wallpapersArray.count == 0) {
+        NSLog(@"Wallpapers array is empty or not initialized.");
+        return;
+    }
+    
+    NSDictionary *randomWallpaper = self.wallpapersArray[arc4random_uniform((uint32_t)self.wallpapersArray.count)];
+    
+    // Step 2: Get its URL
+    NSString *rawURLString = randomWallpaper[@"urls"][@"raw"];
+    if (!rawURLString) {
+        NSLog(@"Failed to retrieve raw URL string from selected wallpaper.");
+        return;
+    }
+    NSURL *rawURL = [NSURL URLWithString:rawURLString];
+    
+    // Step 3-5: Download, save locally, and set as desktop background
+    // Using the logic from `setNewWallpaper` function
+    
+    NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *wallpaperyDir = [appSupportDir stringByAppendingPathComponent:@"Wallpapery"];
+    NSString *currentWallpaperNameFilePath = [wallpaperyDir stringByAppendingPathComponent:@"currentWallpaperName.txt"];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:currentWallpaperNameFilePath]) {
+        NSString *previousWallpaperName = [NSString stringWithContentsOfFile:currentWallpaperNameFilePath encoding:NSUTF8StringEncoding error:nil];
+        if (previousWallpaperName) {
+            NSString *previousWallpaperPath = [wallpaperyDir stringByAppendingPathComponent:previousWallpaperName];
+            [[NSFileManager defaultManager] removeItemAtPath:previousWallpaperPath error:nil];
+        }
+    }
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:wallpaperyDir]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:wallpaperyDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    NSString *randomWallpaperName = [NSString stringWithFormat:@"wallpaper_%lu.jpg", (unsigned long)arc4random_uniform(UINT32_MAX)];
+    [randomWallpaperName writeToFile:currentWallpaperNameFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+    NSURL *randomWallpaperURL = [NSURL fileURLWithPath:[wallpaperyDir stringByAppendingPathComponent:randomWallpaperName]];
+    
+    [[[NSURLSession sharedSession] dataTaskWithURL:rawURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (data) {
+            [data writeToURL:randomWallpaperURL atomically:YES];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setDesktopImageWithLocalURL:randomWallpaperURL];
+            });
+        }
+    }] resume];
 }
 
 
@@ -449,10 +573,16 @@
         [alert setMessageText:@"Missing API Key"];
         [alert setInformativeText:@"You must enter your Unsplash API Key in settings!"];
         [alert addButtonWithTitle:@"OK"];
-        [alert runModal];
-        return; // Exit the method without proceeding further
+        [alert addButtonWithTitle:@"Fix"];
+        
+        NSModalResponse response = [alert runModal];
+        
+        if (response == NSAlertSecondButtonReturn) {
+            [self showSettingsWindow:self];
+        }
+        
+        return;
     }
-    
 
     // If no valid cached data is available, proceed with API request
     NSURL *apiURL = [NSURL URLWithString:@"https://api.unsplash.com/photos/random?count=100&orientation=landscape"];
@@ -687,6 +817,62 @@
     }
     
     return nil;
+}
+
+- (IBAction)helpButtonClicked:(id)sender {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"What is this?"];
+    [alert setInformativeText:@"In order to use Wallpapery, you must obtain your own Unsplash API key. It is free of charge and offers up to 50 thirty-wallpaper pack recharges a day."];
+    [alert addButtonWithTitle:@"Tell me how"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert addButtonWithTitle:@"Why?"];
+    
+    NSModalResponse response = [alert runModal];
+    
+    switch(response) {
+        case NSAlertFirstButtonReturn: {
+            NSAlert *howAlert = [[NSAlert alloc] init];
+            [howAlert setMessageText:@"How to get an API Key?"];
+            [howAlert setInformativeText:@"You will have to create an account on Unsplash's developer website, free of charge, create a project, and then input the given client id into Wallpapery's settings."];
+            [howAlert addButtonWithTitle:@"Go"];
+            [howAlert addButtonWithTitle:@"Cancel"];
+            
+            NSModalResponse howResponse = [howAlert runModal];
+            
+            if (howResponse == NSAlertFirstButtonReturn) {
+                // "Go" button was pressed
+                [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://unsplash.com/developers"]];
+                 [self.settingsWindow orderOut:nil];
+            }
+            break;
+        }
+        case NSAlertThirdButtonReturn: {
+            NSAlert *whyAlert = [[NSAlert alloc] init];
+            [whyAlert setMessageText:@"Why API Key?"];
+            [whyAlert setInformativeText:@"Wallpapery needs Unsplash' permission to use their wallpapers on your computer. An API key (or client id) is the means by which Wallpapery identifies itself."];
+            [whyAlert addButtonWithTitle:@"Tell me how"];
+            [whyAlert addButtonWithTitle:@"Cancel"];
+            
+            NSModalResponse whyResponse = [whyAlert runModal];
+            
+            if (whyResponse == NSAlertFirstButtonReturn) {
+                NSAlert *howAlert = [[NSAlert alloc] init];
+                [howAlert setMessageText:@"How to get an API Key?"];
+                [howAlert setInformativeText:@"You will have to create an account on Unsplash's developer website, free of charge, create a project, and then input the given client id into Wallpapery's settings."];
+                [howAlert addButtonWithTitle:@"Go"];
+                [howAlert addButtonWithTitle:@"Cancel"];
+                
+                NSModalResponse howResponse = [howAlert runModal];
+                
+                if (howResponse == NSAlertFirstButtonReturn) {
+                    // "Go" button was pressed
+                    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://unsplash.com/developers"]];
+                     [self.settingsWindow orderOut:nil];
+                }
+            }
+            break;
+        }
+    }
 }
 
 

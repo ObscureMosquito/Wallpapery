@@ -30,7 +30,7 @@
 		348927482ADC5098004AEDBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 348927272ADC5098004AEDBB /* Cocoa.framework */; };
 		34A5FC652ADC815700D89992 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3489272C2ADC5098004AEDBB /* Foundation.framework */; };
 		34C467752AEAE3B800DD8852 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C467742AEAE3B800DD8852 /* Settings.m */; };
-		34C467782AEAF76000DD8852 /* WallpaperRequester.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C467772AEAF76000DD8852 /* WallpaperRequester.m */; };
+		34C4677B2AEB03F200DD8852 /* Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C4677A2AEB03F200DD8852 /* Timer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,8 +75,8 @@
 		348927462ADC5098004AEDBB /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		34C467732AEAE3B800DD8852 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		34C467742AEAE3B800DD8852 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
-		34C467762AEAF76000DD8852 /* WallpaperRequester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallpaperRequester.h; sourceTree = "<group>"; };
-		34C467772AEAF76000DD8852 /* WallpaperRequester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallpaperRequester.m; sourceTree = "<group>"; };
+		34C467792AEB03F200DD8852 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
+		34C4677A2AEB03F200DD8852 /* Timer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,8 +145,8 @@
 			children = (
 				348927392ADC5098004AEDBB /* AppDelegate.h */,
 				3489273A2ADC5098004AEDBB /* AppDelegate.m */,
-				34C467762AEAF76000DD8852 /* WallpaperRequester.h */,
-				34C467772AEAF76000DD8852 /* WallpaperRequester.m */,
+				34C467792AEB03F200DD8852 /* Timer.h */,
+				34C4677A2AEB03F200DD8852 /* Timer.m */,
 				34C467732AEAE3B800DD8852 /* Settings.h */,
 				34C467742AEAE3B800DD8852 /* Settings.m */,
 				3489273C2ADC5098004AEDBB /* MainMenu.xib */,
@@ -290,10 +290,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34C4677B2AEB03F200DD8852 /* Timer.m in Sources */,
 				3489273B2ADC5098004AEDBB /* AppDelegate.m in Sources */,
 				34C467752AEAE3B800DD8852 /* Settings.m in Sources */,
 				348927342ADC5098004AEDBB /* main.m in Sources */,
-				34C467782AEAF76000DD8852 /* WallpaperRequester.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
