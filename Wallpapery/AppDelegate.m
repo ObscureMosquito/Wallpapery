@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "Settings.h"
+#import "Timer.h"
 
 @interface NSMenu (secret)
 
@@ -254,7 +255,6 @@
     self.locationTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 56, 100, 20)]; // Adjust the frame so it fits inside the plaque
     [self.locationTextField setStringValue:@""];
     [self.locationTextField setFont:customFont];
-    [self.locationTextField setTextColor:[NSColor darkGrayColor]];
     [self.locationTextField setBordered:NO];
     [self.locationTextField setBackgroundColor:[NSColor clearColor]];
     [self.locationTextField setEditable:NO];
@@ -263,15 +263,32 @@
     
     //Author Name
     
-    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 36, 100, 20)]; // Adjust the frame so it fits inside the plaque
+    self.nameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 37, 100, 20)];
     [self.nameTextField setStringValue:@""];
     [self.nameTextField setFont:customFont];
-    [self.nameTextField setTextColor:[NSColor darkGrayColor]];
     [self.nameTextField setBordered:NO];
     [self.nameTextField setBackgroundColor:[NSColor clearColor]];
     [self.nameTextField setEditable:NO];
     [self.nameTextField setSelectable:NO];
     [customView addSubview:self.nameTextField];
+    
+    //Time till update
+    
+    self.timeTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(29, 20, 125, 20)];
+    [self.timeTextField setStringValue:@""];
+    [self.timeTextField setFont:customFont];
+    [self.timeTextField setTextColor:[NSColor blackColor]];
+    [self.timeTextField setBordered:NO];
+    [self.timeTextField setBackgroundColor:[NSColor clearColor]];
+    [self.timeTextField setEditable:NO];
+    [self.timeTextField setSelectable:NO];
+    [customView addSubview:self.timeTextField];
+    [self.timeTextField setNeedsDisplay:YES];
+    [self.timeTextField.superview setNeedsLayout:YES];
+    NSFont *currentFont = [self.timeTextField font];
+    NSFont *smallerFont = [NSFont fontWithName:[currentFont fontName] size:12];
+    [self.timeTextField setFont:smallerFont];
+
     
     self.settingsController = [[Settings alloc] init];
     self.wallpaperTimerManager = [[Timer alloc] init];
@@ -332,14 +349,26 @@
 
 - (IBAction)sliderValueChanged:(NSSlider *)slider {
     // Get the slider's value in minutes
-    double minutes = [slider doubleValue];
+    double minutesValue = [slider doubleValue];
     
-    // Update the label with the slider's minute value
-    self.sliderValueLabel.stringValue = [NSString stringWithFormat:@"%.0f minutes", minutes];
+    // Calculate hours and minutes for display
+    NSInteger hours = (NSInteger)minutesValue / 60;
+    NSInteger minutes = (NSInteger)minutesValue % 60;
+    
+    NSString *formattedTime;
+    if (hours > 0) {
+        formattedTime = [NSString stringWithFormat:@"%ldh:%ldm", (long)hours, (long)minutes];
+    } else {
+        formattedTime = [NSString stringWithFormat:@"%ldm", (long)minutes];
+    }
+    
+    // Update the label with the formatted time value
+    self.sliderValueLabel.stringValue = formattedTime;
     
     // Save the slider's value to UserDefaults
-    [[NSUserDefaults standardUserDefaults] setDouble:minutes forKey:@"sliderValue"];
+    [[NSUserDefaults standardUserDefaults] setDouble:minutesValue forKey:@"sliderValue"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.wallpaperTimerManager updateTimeLeft];
     
     NSString *selectedMode = [[NSUserDefaults standardUserDefaults] objectForKey:@"modePreference"];
     if ([selectedMode isEqualToString:@"Automatic"]) {
@@ -349,11 +378,11 @@
             [self.wallpaperTimerManager stopAutomaticWallpaperChange];
             
             // Restart the timer with the new interval
-            [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:minutes];
+            [self.wallpaperTimerManager startAutomaticWallpaperChangeWithCallbackForInterval:minutesValue];
         }
-
     }
 }
+
 
 - (void)setupInterface {
     // Get the saved slider value, defaulting to a default value (e.g., 5) if not found
@@ -362,9 +391,22 @@
         savedSliderValue = 60; // Default value
     }
     
-    // Set the slider's value and the label
+    // Set the slider's value
     [self.refreshTimeSlider setDoubleValue:savedSliderValue];
-    self.sliderValueLabel.stringValue = [NSString stringWithFormat:@"%.0f minutes", savedSliderValue];
+    
+    // Calculate hours and minutes for display
+    NSInteger hours = (NSInteger)savedSliderValue / 60;
+    NSInteger minutes = (NSInteger)savedSliderValue % 60;
+    
+    NSString *formattedTime;
+    if (hours > 0) {
+        formattedTime = [NSString stringWithFormat:@"%ldh:%ldm", (long)hours, (long)minutes];
+    } else {
+        formattedTime = [NSString stringWithFormat:@"%ldm", (long)minutes];
+    }
+    
+    // Update the label with the formatted time value
+    self.sliderValueLabel.stringValue = formattedTime;
     
     // Fetch saved clientId and set it to the clientIdTextField
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -378,14 +420,11 @@
     [self.clientIdTextField setStringValue:clientId];
     
     // Set the mode based on saved preference
-    
     NSString *savedMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"modePreference"];
     if (savedMode) {
         [self.modeSelector selectItemWithTitle:savedMode];
     }
-    
 }
-
 
 
 - (void)setRandomWallpaper {
@@ -849,8 +888,8 @@
                     
                     self.locationTextField.stringValue = location ?: @"Unknown Location";
                     self.nameTextField.stringValue = name ?: @"Unknown Name";
-                    self.locationTextField.textColor = [NSColor blackColor]; // For example, set to red color
-                    self.nameTextField.textColor = [NSColor blackColor];
+                    self.locationTextField.textColor = [NSColor darkGrayColor]; // For example, set to red color
+                    self.nameTextField.textColor = [NSColor darkGrayColor];
 
                     
                     NSLog(@"After setting - Location: %@, Name: %@", self.locationTextField.stringValue, self.nameTextField.stringValue);

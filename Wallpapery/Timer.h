@@ -18,8 +18,11 @@
 @property (nonatomic, copy) void (^wallpaperChangeCallback)(void);
 @property (nonatomic, assign) NSTimeInterval timeInterval;
 @property (nonatomic, readonly) BOOL isTimerRunning;
+@property (nonatomic, strong) NSTextField *timeTextField;
+
 
 - (void)startAutomaticWallpaperChangeWithCallbackForInterval:(NSTimeInterval)interval;
 - (void)stopAutomaticWallpaperChange;
+- (void)updateTimeLeft;
 
 @end

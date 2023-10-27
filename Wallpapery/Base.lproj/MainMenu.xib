@@ -88,15 +88,15 @@
                         </connections>
                     </button>
                     <slider appearanceType="lightContent" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktz-y8-FE8">
-                        <rect key="frame" x="38" y="126" width="239" height="20"/>
+                        <rect key="frame" x="9" y="126" width="287" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="5" maxValue="120" doubleValue="61.976598337155963" tickMarkPosition="above" sliderType="linear" id="4Ac-Vf-kkY"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="5" maxValue="1440" doubleValue="720" tickMarkPosition="above" sliderType="linear" id="4Ac-Vf-kkY"/>
                         <connections>
                             <action selector="sliderValueChanged:" target="Voe-Tx-rLC" id="5HQ-wD-0Zs"/>
                         </connections>
                     </slider>
                     <textField appearanceType="lightContent" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aUY-3n-9Eo">
-                        <rect key="frame" x="38" y="147" width="85" height="17"/>
+                        <rect key="frame" x="87" y="152" width="85" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Update Rate:" id="nE5-LP-UNN">
                             <font key="font" metaFont="system"/>
@@ -112,7 +112,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField appearanceType="lightContent" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yjb-Ik-EFY">
-                        <rect key="frame" x="121" y="147" width="109" height="17"/>
+                        <rect key="frame" x="171" y="152" width="109" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="fKS-as-QKp">
                             <font key="font" metaFont="system"/>
@@ -134,9 +134,9 @@
                     <popUpButton appearanceType="lightContent" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wmz-fx-Chw">
                         <rect key="frame" x="7" y="10" width="99" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Manual" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="vbY-J0-R41" id="mdU-Bu-0in">
+                        <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="vbY-J0-R41" id="mdU-Bu-0in">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
+                            <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="g9v-Nk-KKB">
                                 <items>
                                     <menuItem title="Manual" id="o9W-iu-7Rv"/>

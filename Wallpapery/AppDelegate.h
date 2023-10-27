@@ -25,6 +25,7 @@
 @property (strong, nonatomic) Timer *wallpaperTimerManager;
 @property (weak) IBOutlet NSSlider *refreshTimeSlider;
 @property (weak) IBOutlet NSTextField *sliderValueLabel;
+@property (strong, nonatomic) NSTextField *timeTextField;
 
 
 - (IBAction)modeChangedAction:(id)sender;
