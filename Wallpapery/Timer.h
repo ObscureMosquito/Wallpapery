@@ -20,6 +20,7 @@
 @property (nonatomic, readonly) BOOL isTimerRunning;
 @property (nonatomic, strong) NSTextField *timeTextField;
 @property (nonatomic) BOOL hasSentNotification;
+@property (nonatomic) NSTimeInterval defaultTimeInterval;
 
 
 - (void)startAutomaticWallpaperChangeWithCallbackForInterval:(NSTimeInterval)interval;

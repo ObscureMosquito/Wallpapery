@@ -331,8 +331,7 @@
 
 - (IBAction)modeChangedAction:(id)sender {
     NSString *selectedMode = self.modeSelector.selectedItem.title;
-    
-    // Save the mode to UserDefaults
+
     [[NSUserDefaults standardUserDefaults] setObject:selectedMode forKey:@"modePreference"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -352,6 +351,10 @@
 - (IBAction)sliderValueChanged:(NSSlider *)slider {
     // Get the slider's value in minutes
     double minutesValue = [slider doubleValue];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"savedTimeLeft"];
+    [defaults synchronize];
     
     // Calculate hours and minutes for display
     NSInteger hours = (NSInteger)minutesValue / 60;

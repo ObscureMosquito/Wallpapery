@@ -30,18 +30,23 @@
     NSLog(@"Interval passed: %f", interval);
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // Get saved time left
     double savedTime = [defaults doubleForKey:@"savedTimeLeft"];
     
-    // If you want to respect the slider change always, reset the saved time here
-    [defaults removeObjectForKey:@"savedTimeLeft"];
-    [defaults synchronize];
+    // Update the default interval
+    self.defaultTimeInterval = interval * 60.0;
     
-    if (savedTime > 0 && savedTime < self.timeInterval) {
+    // Check if there's a saved time left that's less than default time interval
+    if (savedTime > 0 && savedTime < self.defaultTimeInterval) {
         self.timeLeft = savedTime;
     } else {
-        self.timeInterval = interval * 60.0; // Store the interval. Convert minutes to seconds.
-        self.timeLeft = self.timeInterval;
+        self.timeLeft = self.defaultTimeInterval;
     }
+    
+    // Save the default time interval
+    [defaults setDouble:self.defaultTimeInterval forKey:@"defaultTimeInterval"];
+    [defaults synchronize];
     
     if (self.wallpaperTimer) {
         [self.wallpaperTimer invalidate];
@@ -64,8 +69,8 @@
 
 
 - (void)handleTimerTick:(NSTimer *)timer {
-    
     self.timeLeft -= 5.0; // Decrease the time left by 5 seconds
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setDouble:self.timeLeft forKey:@"savedTimeLeft"];
     [defaults synchronize];
