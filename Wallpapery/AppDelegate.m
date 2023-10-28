@@ -414,7 +414,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *clientId = [defaults objectForKey:@"UnsplashClientId"];
     if (!clientId || [clientId length] == 0) {
-        clientId = @"Enter your client id...";
+        clientId = @"Client id...";
     }
     
     NSLog(@"Retrieved clientId: %@", clientId);

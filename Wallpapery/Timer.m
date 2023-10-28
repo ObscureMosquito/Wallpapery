@@ -28,8 +28,20 @@
 - (void)startAutomaticWallpaperChangeWithCallbackForInterval:(NSTimeInterval)interval {
     self.hasSentNotification = NO;
     NSLog(@"Interval passed: %f", interval);
-    self.timeInterval = interval * 60.0; // Store the interval. Convert minutes to seconds.
-    self.timeLeft = self.timeInterval;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    double savedTime = [defaults doubleForKey:@"savedTimeLeft"];
+    
+    // If you want to respect the slider change always, reset the saved time here
+    [defaults removeObjectForKey:@"savedTimeLeft"];
+    [defaults synchronize];
+    
+    if (savedTime > 0 && savedTime < self.timeInterval) {
+        self.timeLeft = savedTime;
+    } else {
+        self.timeInterval = interval * 60.0; // Store the interval. Convert minutes to seconds.
+        self.timeLeft = self.timeInterval;
+    }
     
     if (self.wallpaperTimer) {
         [self.wallpaperTimer invalidate];
@@ -45,11 +57,18 @@
     
     // Add the timer to the run loop in common modes.
     [[NSRunLoop currentRunLoop] addTimer:self.wallpaperTimer forMode:NSRunLoopCommonModes];
+    
+    // Update the UI instantly
+    [self updateTimeLeft];
 }
+
 
 - (void)handleTimerTick:(NSTimer *)timer {
     
     self.timeLeft -= 5.0; // Decrease the time left by 5 seconds
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setDouble:self.timeLeft forKey:@"savedTimeLeft"];
+    [defaults synchronize];
     
     // If 1 minute (60 seconds) is remaining, send a notification
     if (self.timeLeft <= 60.0 && !self.hasSentNotification) {

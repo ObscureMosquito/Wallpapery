@@ -88,9 +88,9 @@
                         </connections>
                     </button>
                     <slider appearanceType="lightContent" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktz-y8-FE8">
-                        <rect key="frame" x="9" y="126" width="287" height="20"/>
+                        <rect key="frame" x="9" y="126" width="287" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="1440" doubleValue="720" tickMarkPosition="above" sliderType="linear" id="4Ac-Vf-kkY"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="30" maxValue="1440" doubleValue="30" tickMarkPosition="below" numberOfTickMarks="48" allowsTickMarkValuesOnly="YES" sliderType="linear" id="4Ac-Vf-kkY"/>
                         <connections>
                             <action selector="sliderValueChanged:" target="Voe-Tx-rLC" id="5HQ-wD-0Zs"/>
                         </connections>
@@ -134,13 +134,13 @@
                     <popUpButton appearanceType="lightContent" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wmz-fx-Chw">
                         <rect key="frame" x="7" y="10" width="99" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="vbY-J0-R41" id="mdU-Bu-0in">
+                        <popUpButtonCell key="cell" type="push" title="Manual" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="o9W-iu-7Rv" id="mdU-Bu-0in">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="g9v-Nk-KKB">
                                 <items>
-                                    <menuItem title="Manual" id="o9W-iu-7Rv"/>
-                                    <menuItem title="Automatic" state="on" id="vbY-J0-R41"/>
+                                    <menuItem title="Manual" state="on" id="o9W-iu-7Rv"/>
+                                    <menuItem title="Automatic" id="vbY-J0-R41"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
