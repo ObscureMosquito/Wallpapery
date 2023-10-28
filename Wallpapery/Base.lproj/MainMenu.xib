@@ -88,7 +88,7 @@
                         </connections>
                     </button>
                     <slider appearanceType="lightContent" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktz-y8-FE8">
-                        <rect key="frame" x="9" y="126" width="287" height="25"/>
+                        <rect key="frame" x="9" y="121" width="287" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="30" maxValue="1440" doubleValue="30" tickMarkPosition="below" numberOfTickMarks="48" allowsTickMarkValuesOnly="YES" sliderType="linear" id="4Ac-Vf-kkY"/>
                         <connections>
