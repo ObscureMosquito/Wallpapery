@@ -86,20 +86,22 @@
     
     // Update the UI with the time left
     [self updateTimeLeft];
-    
+
     // If timer reaches 0, change wallpaper and restart timer
     if (self.timeLeft <= 0) {
-        // Get AppDelegate instance
         AppDelegate *appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         
         // Call the setRandomWallpaper method from AppDelegate
         [appDelegate setRandomWallpaper];
         
-        // Restart the timer by invalidating the current one and recalling this method
-        [timer invalidate];
-        self.wallpaperTimer = nil;
-        [self startAutomaticWallpaperChangeWithCallbackForInterval:self.timeInterval / 60.0];
+        // Reset timeLeft to default value
+        self.timeLeft = self.defaultTimeInterval;
+        
+        // Update the UI instantly
+        [self updateTimeLeft];
+
     }
+
 }
 
 - (void)stopAutomaticWallpaperChange {
